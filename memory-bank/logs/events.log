@@ -1,0 +1,4 @@
+# Event Log
+# Format: YYYY-MM-DDTHH:MMZ  role  action  subject
+# Actions: accepted, rejected, updated, created, opened, closed, raised, resolved, blocked, unblocked
+# Append only — do not edit or delete existing entries

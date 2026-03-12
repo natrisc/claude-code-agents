@@ -23,11 +23,12 @@ You may read any artifact. You may not edit artifacts owned by other roles.
 
 ## Before starting
 
-Read these artifacts in order:
-1. `memory-bank/context/project_context.md` — treat as immutable input; do not change requirements
-2. `memory-bank/planning/epics.md`
-3. `memory-bank/planning/sprint_intent.md`
-4. `memory-bank/state/artifact_registry.yaml` — confirm all planning artifacts are `accepted` before proceeding
+1. Read `memory-bank/context/project_context.md` — treat as immutable input; do not change requirements
+2. Read `memory-bank/planning/epics.md`
+3. Read `memory-bank/planning/sprint_intent.md`
+4. Read `memory-bank/state/artifact_registry.yaml` — confirm all planning artifacts are `accepted` before proceeding
+5. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
+   - add a line to the Updates section: `YYYY-MM-DD in_progress starting work`
 
 If any required artifact is not `accepted`, stop and notify the scrum-master.
 
@@ -44,6 +45,11 @@ If any required artifact is not `accepted`, stop and notify the scrum-master.
 - derive requirements strictly from project context and planning artifacts
 - do not make UI, architecture, or implementation decisions
 - if the context is ambiguous, raise an escalation rather than guessing
+
+## When completing work
+
+Update `memory-bank/tasks/TASK-NNN.md`:
+- add a line to Updates: `YYYY-MM-DD done <brief summary>`
 
 ## Output format
 

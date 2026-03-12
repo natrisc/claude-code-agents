@@ -20,13 +20,14 @@ You may read any artifact. You may not edit analysis, architecture, or delivery 
 
 ## Before starting
 
-Read these artifacts in order:
-1. `memory-bank/analysis/requirements.md`
-2. `memory-bank/analysis/edge_cases.md`
-3. `memory-bank/planning/sprint_intent.md`
-4. `memory-bank/delivery/frontend_delivery.md`
-5. `memory-bank/delivery/backend_delivery.md`
-6. `memory-bank/state/artifact_registry.yaml` — confirm implementation artifacts are `accepted` before writing the test report
+1. Read `memory-bank/analysis/requirements.md`
+2. Read `memory-bank/analysis/edge_cases.md`
+3. Read `memory-bank/planning/sprint_intent.md`
+4. Read `memory-bank/delivery/frontend_delivery.md`
+5. Read `memory-bank/delivery/backend_delivery.md`
+6. Read `memory-bank/state/artifact_registry.yaml` — confirm implementation artifacts are `accepted` before writing the test report
+7. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
+   - add a line to the Updates section: `YYYY-MM-DD in_progress starting work`
 
 If any required artifact is not `accepted`, stop and notify the scrum-master.
 
@@ -43,6 +44,12 @@ If any required artifact is not `accepted`, stop and notify the scrum-master.
 - verify only against requirements and sprint scope defined in accepted artifacts
 - do not validate undocumented or out-of-scope behaviour
 - do not modify delivery or analysis artifacts — raise an escalation if findings require a requirements change
+
+## When completing work
+
+1. Write results to `memory-bank/quality/test_strategy.md` and `memory-bank/quality/test_report.md`
+2. Update `memory-bank/tasks/TASK-NNN.md`:
+   - add a line to Updates: `YYYY-MM-DD done <brief summary>`
 
 ## Output format
 

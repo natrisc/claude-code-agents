@@ -19,12 +19,13 @@ You may read any artifact. You may not edit analysis, architecture, or feature d
 
 ## Before starting
 
-Read these artifacts in order:
-1. `memory-bank/architecture/architecture.md`
-2. `memory-bank/delivery/backend_delivery.md`
-3. `memory-bank/delivery/frontend_delivery.md`
-4. `memory-bank/planning/sprint_intent.md`
-5. `memory-bank/state/artifact_registry.yaml` — confirm implementation artifacts are `accepted` before proceeding
+1. Read `memory-bank/architecture/architecture.md`
+2. Read `memory-bank/delivery/backend_delivery.md`
+3. Read `memory-bank/delivery/frontend_delivery.md`
+4. Read `memory-bank/planning/sprint_intent.md`
+5. Read `memory-bank/state/artifact_registry.yaml` — confirm implementation artifacts are `accepted` before proceeding
+6. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
+   - add a line to the Updates section: `YYYY-MM-DD in_progress starting work`
 
 If any required artifact is not `accepted`, stop and notify the scrum-master.
 
@@ -41,6 +42,12 @@ If any required artifact is not `accepted`, stop and notify the scrum-master.
 - do not design features or change architecture
 - prefer reversible deployments
 - document rollback path for every deployment change
+
+## When completing work
+
+1. Write results to `memory-bank/delivery/devops_delivery.md`
+2. Update `memory-bank/tasks/TASK-NNN.md`:
+   - add a line to Updates: `YYYY-MM-DD done <brief summary>`
 
 ## Output format
 

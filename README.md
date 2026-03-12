@@ -1,506 +1,315 @@
 # Claude Code Agents
 
-**Agentic Delivery System for Claude Code**
+**Turn Claude Code into a disciplined AI engineering team.**
 
-Turn Claude Code into a disciplined AI engineering team with architecture reviews, QA automation, security checks, and release readiness built into the workflow.
+Architecture reviews, QA automation, security checks, and release readiness — built directly into your development workflow.
 
-⭐ If this project helps you, please consider starring the repository.
-
----
-
-# What This Project Does
-
-This repository transforms **Claude Code** into a **multi-agent software delivery system**.
-
-Instead of treating Claude as a single coding assistant, this setup organizes Claude into **specialized engineering roles** coordinated by a Scrum-Master-style orchestrator.
-
-Roles include:
-
-• Product Owner  
-• Product Manager  
-• Business Analyst  
-• System Architect  
-• Frontend Developer  
-• Backend Developer  
-• QA Tester  
-• Security Officer  
-• DevOps Engineer  
-
-The main Claude session acts as the **Scrum Master**, coordinating these agents to deliver structured, production-ready features.
-
-The goal is to improve:
-
-- engineering discipline
-- architectural consistency
-- security awareness
-- test coverage
-- release readiness
-
-while maintaining **fast AI-assisted development workflows**.
+⭐ If this project helps you, please star the repository.
 
 ---
 
-# Example Workflow
+## The Problem
 
-User request:
+Most developers use AI coding tools like this:
 
-> Add OAuth login with Google.
-
-Claude workflow:
-
-1. Product Owner defines acceptance criteria
-2. Business Analyst models authentication flow
-3. System Architect designs architecture changes
-4. Backend Developer implements OAuth service
-5. Frontend Developer integrates login UI
-6. QA Tester creates authentication tests
-7. Security Officer reviews token handling
-8. DevOps Engineer validates deployment safety
-
-Result: a **production-ready feature with tests and security review**.
-
----
-
-# Why This Exists
-
-Most developers currently use AI coding tools like this:
-
+```text
 "Write code for X."
+```
 
-This often leads to:
+The result is usually:
 
 - inconsistent architecture
 - missing tests
-- security vulnerabilities
-- chaotic prompts
-- fragile codebases
+- security blind spots
+- no audit trail
+- fragile codebases that accumulate AI debt
 
-This repository introduces **structured AI collaboration**.
-
-Claude behaves like a **disciplined engineering team** rather than a single coding assistant.
+The root cause is that AI assistants have no memory, no role boundaries, and no workflow discipline. Every prompt starts from scratch.
 
 ---
 
-# System Architecture
+## The Solution
 
-The repository uses Claude Code's extensibility features:
+This repository implements a **repository-centric AI Scrum team** for Claude Code.
 
-- `CLAUDE.md` → repository operating model
-- `.claude/settings.json` → permissions and guardrails
-- `.claude/agents` → specialized AI roles
-- `.claude/skills` → reusable workflows
-- `.claude/rules` → engineering standards
-- `.claude/hooks` → automated safety checks
-- `.mcp.json` → external system integrations
+Instead of relying on conversation context, agents communicate through **canonical documents** stored in the repository. Each agent reads specific input artifacts, writes to owned output artifacts, and the system enforces gate progression before any work proceeds.
 
-Repository structure:
+The result is a **structured delivery system** with:
 
+- clear role boundaries and ownership
+- artifact-driven workflow state
+- enforced gate progression
+- escalation handling
+- a full event log and sprint dashboard
+
+---
+
+## How It Works
+
+### The Memory Bank
+
+The core of the system is `memory-bank/` — a structured folder that serves as the shared memory of the AI team.
+
+```text
+memory-bank/
+  context/        ← project context (Product Owner — immutable for others)
+  planning/       ← roadmap, epics, backlog, sprint intent
+  analysis/       ← requirements, business rules, edge cases
+  architecture/   ← architecture, API contracts, data model, ADRs
+  delivery/       ← frontend, backend, devops delivery notes
+  quality/        ← test strategy, test report, security review
+  reviews/        ← sprint review, PO decision
+  state/          ← workflow_state.yaml, artifact_registry.yaml, dashboard.md
+  tasks/          ← TASK-NNN.md files per routed piece of work
+  escalations/    ← ESC-NNN.md files for unresolved blockers
+  logs/           ← append-only event log
 ```
 
+Every agent reads its required inputs from here and writes its outputs back here. Nothing is held in conversation context.
+
+### Gate Progression
+
+Work proceeds through a strict left-to-right state machine:
+
+```text
+CONTEXT_READY
+  → PLANNING_COMPLETE
+  → ANALYSIS_COMPLETE
+  → ARCHITECTURE_COMPLETE
+  → IMPLEMENTATION_COMPLETE
+  → QA_COMPLETE + SECURITY_COMPLETE
+  → SPRINT_REVIEW_READY
+  → PO_DECISION_MADE
+```
+
+The Scrum Master reads `workflow_state.yaml` before routing any work. If a gate is not satisfied, work does not proceed.
+
+### Task Tracking
+
+Every time the Scrum Master routes work to a specialist, it creates a `TASK-NNN.md` file. The specialist updates it when they start and when they finish. The Scrum Master tracks all active tasks in `workflow_state.yaml` and regenerates `state/dashboard.md` after every state change.
+
+### Escalation Handling
+
+If any agent cannot proceed due to ambiguity or missing information, it raises an `ESC-NNN.md` escalation. The downstream work is blocked until the Product Owner resolves it. No agent may guess or work around an escalation.
+
+---
+
+## The AI Scrum Team
+
+| Role | Owns | Reads |
+| --- | --- | --- |
+| Product Owner | `context/*`, `reviews/po_decision.md` | everything |
+| Product Manager | `planning/roadmap.md`, `epics.md`, `backlog.md` | context |
+| Scrum Master | `planning/sprint_intent.md`, `state/*`, `tasks/*` | everything |
+| Business Analyst | `analysis/*` | context, planning |
+| System Architect | `architecture/*` | context, analysis |
+| Frontend Developer | `delivery/frontend_delivery.md` | context, analysis, architecture |
+| Backend Developer | `delivery/backend_delivery.md` | context, analysis, architecture |
+| DevOps Engineer | `delivery/devops_delivery.md` | architecture, delivery |
+| QA Tester | `quality/test_strategy.md`, `quality/test_report.md` | analysis, delivery |
+| Security Officer | `quality/security_review.md`, `quality/threat_model.md` | architecture, analysis, quality |
+
+Role boundaries are strict. No agent edits artifacts owned by another role.
+
+---
+
+## Example Sprint
+
+User request: Add OAuth login with Google.
+
+### Step 1 — Context
+
+Product Owner defines goals, constraints, and acceptance criteria in `context/project_context.md`. Sets `context_ready: true`.
+
+### Step 2 — Planning
+
+Product Manager writes roadmap, epics, and backlog items. Scrum Master writes sprint intent. Gate: `planning_complete: true`.
+
+### Step 3 — Analysis
+
+Business Analyst derives requirements, business rules, and edge cases from context and planning. Gate: `analysis_complete: true`.
+
+### Step 4 — Architecture
+
+System Architect designs OAuth flow, token handling, API contracts. Creates ADR. Gate: `architecture_complete: true`.
+
+### Step 5 — Implementation *(parallel)*
+
+Backend Developer implements OAuth service. Frontend Developer builds login UI. Both update their TASK files. Gate: `implementation_complete: true`.
+
+### Step 6 — Quality *(parallel)*
+
+QA Tester validates against requirements. Security Officer reviews token handling and secrets exposure. Gates: `qa_complete: true`, `security_complete: true`.
+
+### Step 7 — Sprint Review
+
+Scrum Master opens sprint review. Product Owner accepts, rejects, or requests changes. Gate: `po_decision_made: true`.
+
+---
+
+## Repository Structure
+
+```text
 .
-├── CLAUDE.md
+├── CLAUDE.md                  ← operating model
 ├── README.md
-├── .mcp.json
-└── .claude
-├── settings.json
-├── agents
-├── skills
-├── rules
-└── hooks
-
+├── .mcp.json                  ← external system integrations
+├── memory-bank/               ← shared agent memory
+│   ├── context/
+│   ├── planning/
+│   ├── analysis/
+│   ├── architecture/
+│   ├── delivery/
+│   ├── quality/
+│   ├── reviews/
+│   ├── state/
+│   ├── tasks/
+│   ├── escalations/
+│   └── logs/
+└── .claude/
+    ├── settings.json          ← permissions and guardrails
+    ├── agents/                ← 9 specialist agent definitions
+    ├── skills/                ← 11 reusable workflow skills
+    ├── rules/                 ← stack-specific engineering standards
+    └── hooks/                 ← automated safety checks
 ```
 
 ---
 
-# AI Scrum Team Roles
+## Guardrails
 
-Each role has clearly defined responsibilities.
+### Permissions
 
-## Scrum Master
+Claude's shell access is restricted in `settings.json`:
 
-The main Claude session.
+- blocked: `rm -rf /`, `terraform destroy`, `kubectl delete`, reading `.env` files
+- confirmation required: `git push`, `terraform apply`, `kubectl apply`, `psql`
+- permitted without asking: test runners, linters, formatters, read-only git commands
 
-Responsibilities:
+### Hooks
 
-- coordinate the work
-- route tasks to the correct specialist
-- ensure workflow discipline
-- produce integrated outputs
-
----
-
-## Product Owner
-
-Responsible for:
-
-- acceptance criteria
-- scope control
-- release acceptance
+- **PreToolUse**: blocks dangerous shell commands before execution
+- **PostToolUse**: runs formatters automatically after file edits
+- **TaskCompleted**: triggers a final review checklist
 
 ---
 
-## Product Manager
+## Setup
 
-Responsible for:
+### 1. Install Claude Code
 
-- prioritization
-- business value
-- roadmap alignment
-
----
-
-## Business Analyst
-
-Responsible for:
-
-- domain modeling
-- workflows
-- dependencies
-- business rules
-
----
-
-## System Architect
-
-Responsible for:
-
-- architecture decisions
-- module boundaries
-- API contracts
-- technical tradeoffs
-
----
-
-## Frontend Developer
-
-Responsible for:
-
-- UI implementation
-- React components
-- accessibility
-- frontend tests
-
----
-
-## Backend Developer
-
-Responsible for:
-
-- APIs
-- services
-- persistence
-- integration tests
-
----
-
-## QA Tester
-
-Responsible for:
-
-- regression testing
-- edge cases
-- test completeness
-- release confidence
-
----
-
-## Security Officer
-
-Responsible for reviewing:
-
-- authentication
-- authorization
-- dependency risks
-- input validation
-- secrets handling
-
----
-
-## DevOps Engineer
-
-Responsible for:
-
-- CI/CD
-- infrastructure
-- deployment safety
-- rollback planning
-- observability
-
----
-
-# Development Workflow
-
-The default workflow for new work:
-
-1. Clarify requirements  
-2. Refine backlog item  
-3. Define acceptance criteria  
-4. Evaluate architecture impact  
-5. Implement code  
-6. Add or update tests  
-7. Perform QA review  
-8. Perform security review  
-9. Validate release readiness  
-
----
-
-# Definition of Done
-
-A task is complete when:
-
-- acceptance criteria are satisfied
-- code follows repository architecture
-- tests exist or are updated
-- lint and typecheck pass
-- security concerns are addressed
-- documentation updated if behavior changed
-- release risks documented
-
----
-
-# Hooks and Guardrails
-
-Claude hooks enforce safety and consistency.
-
-### PreToolUse
-
-Prevents dangerous commands such as:
-
-- `rm -rf /`
-- `terraform destroy`
-- `kubectl delete`
-
-### PostToolUse
-
-Runs formatting automatically after edits.
-
-Examples:
-
-- `prettier`
-- `ruff`
-- `rustfmt`
-
-### TaskCompleted
-
-Triggers a final review reminder that checks:
-
-- changed files
-- tests executed
-- risks and follow-ups
-
----
-
-# Security Model
-
-Claude's shell access is restricted using `settings.json`.
-
-Examples of blocked actions:
-
-- reading `.env` files
-- reading secrets directories
-- editing production infrastructure
-- destructive infrastructure commands
-
-Potentially dangerous commands require confirmation.
-
----
-
-# Supported Technology Stacks
-
-Typical combinations include:
-
-- React + Node
-- React + Python
-- React + Rust
-- Python backend services
-- Rust backend services
-
-Language-specific rules live in:
-
-```
-
-.claude/rules/
-
-```
-
-Examples include:
-
-- `frontend.md`
-- `backend.md`
-- `python.md`
-- `rust.md`
-- `testing.md`
-- `security.md`
-- `devops.md`
-
----
-
-# Setup
-
-Install Claude Code:
-
-```
-
+```bash
 npm install -g @anthropic-ai/claude-code
-
 ```
 
-Clone the repository:
+### 2. Clone this repository into your project
 
+```bash
+git clone https://github.com/natrisc/claude-code-agents .claude-agents
 ```
 
-git clone [https://github.com/YOUR-REPO/claude-code-agents](https://github.com/YOUR-REPO/claude-code-agents)
+Or copy the relevant files into your existing project.
 
-```
+### 3. Make hooks executable
 
-Make hooks executable:
-
-```
-
+```bash
 chmod +x .claude/hooks/*.sh
-
 ```
 
-Start Claude from the project directory:
+### 4. Start Claude
 
-```
-
+```bash
 claude
-
 ```
+
+### 5. Fill in the project context
+
+Open `memory-bank/context/project_context.md` and complete the template. Then set its status to `accepted` in `memory-bank/state/artifact_registry.yaml`. This opens the first gate and starts the workflow.
 
 ---
 
-# Usage
+## Supported Stacks
 
-Typical Claude interactions follow this pattern.
+Engineering rules in `.claude/rules/` cover:
 
-### Planning
+- TypeScript / Node
+- React
+- Python
+- Rust
+- REST APIs
+- cloud-native and containerised systems
 
-```
-
-QPLAN
-
-```
-
-Analyze the repository and propose an implementation plan.
-
-### Implementation
-
-```
-
-QCODE
-
-```
-
-Implement the plan and run tests and checks.
-
-### Code Review
-
-```
-
-QCHECK
-
-```
-
-Review the change as a skeptical senior engineer.
-
-### Function Review
-
-```
-
-QCHECKF
-
-```
-
-Review modified or new functions.
-
-### Test Review
-
-```
-
-QCHECKT
-
-```
-
-Review modified or new tests.
-
-### UX Validation
-
-```
-
-QUX
-
-```
-
-Simulate a human UX tester and list important scenarios.
+The system is stack-agnostic — rules are additive, not prescriptive.
 
 ---
 
-# Model Context Protocol (MCP)
+## Skills
 
-Claude can connect to external systems using MCP.
+Eleven reusable workflow skills are included:
 
-Typical integrations include:
-
-- GitHub
-- Linear or Jira
-- Notion or Confluence
-- Postgres
-- Figma
-- Sentry
-- Kubernetes
-- cloud infrastructure
-
-Configuration lives in:
-
-```
-
-.mcp.json
-
-```
+| Skill | Purpose |
+| --- | --- |
+| `backlog-refinement` | convert rough ideas into Scrum-ready items |
+| `story-writing` | produce user stories with testable acceptance criteria |
+| `sprint-planning` | turn backlog items into a sprint-ready plan |
+| `api-design` | design or review API contracts |
+| `architect-review` | review changes for architectural fit |
+| `back-end-implementation` | implement backend work with service boundaries and tests |
+| `front-end-implementation` | implement frontend work with component boundaries and tests |
+| `qa-regression` | review changes for regression risk and missing coverage |
+| `security-review` | review for auth, validation, secret, and exposure risks |
+| `release-readiness` | evaluate whether a change is safe to release |
+| `incident-triage` | triage production issues across app, infra, and dependencies |
 
 ---
 
-# Roadmap
+## MCP Integrations
 
-Planned improvements:
+Connect Claude to external systems via `.mcp.json`:
 
-- stack-specific presets
-- enhanced QA automation
-- architecture validation
-- deeper MCP integrations
-- deployment pipeline templates
-
----
-
-# Contributing
-
-Contributions are welcome.
-
-Please ensure:
-
-- architecture rules are respected
-- tests are included or updated
-- security guidelines are followed
-- changes remain small and focused
+- GitHub — issues, PRs, code search
+- Linear or Jira — backlog management
+- Postgres — live database queries
+- Notion or Confluence — documentation
+- Sentry — error tracking
+- Kubernetes — cluster observability
 
 ---
 
-# Need Help Implementing This?
+## Roadmap
 
-I help teams implement **agentic development workflows using Claude Code**.
+- [ ] Variant C — mandatory sign-off gates, invalidation enforcement, audit reports
+- [ ] Stack-specific memory-bank presets
+- [ ] GitHub Actions integration for gate enforcement
+- [ ] Deeper MCP integrations for Linear and Sentry
 
-Services include:
+---
 
-- Claude Code workflow setup
+## Contributing
+
+Contributions welcome.
+
+- follow the operating model in `CLAUDE.md`
+- keep changes small and focused
+- update relevant memory-bank artifacts if behaviour changes
+- security guidelines apply to all contributions
+
+---
+
+## Need Help Setting This Up?
+
+I help engineering teams implement structured AI delivery workflows using Claude Code.
+
+Services:
+
+- Claude Code workflow setup for your codebase
 - AI development workflow audits
-- agentic SDLC consulting
+- Agentic SDLC design and implementation
 
-Contact: (add your email or website)
+Contact: [coen@appvia.io](mailto:coen@appvia.io)
 
 ---
 
-# License
+## License
 
 MIT

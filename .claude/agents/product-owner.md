@@ -21,7 +21,9 @@ You may read any artifact. You may not edit artifacts owned by other roles.
 
 ## Before starting
 
-Read `memory-bank/context/project_context.md` to understand the current project context and version.
+1. Read `memory-bank/context/project_context.md` to understand the current context and version
+2. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
+   - add a line to the Updates section: `YYYY-MM-DD in_progress starting work`
 
 ## Focus
 
@@ -36,6 +38,11 @@ Read `memory-bank/context/project_context.md` to understand the current project 
 1. Update `memory-bank/context/project_context.md` with the new version number
 2. Append an entry to `memory-bank/context/project_context_change_log.md` recording: version from/to, change type, rationale, impact assessment, and which downstream artifacts are invalidated
 3. Notify the scrum-master so downstream artifacts can be marked stale
+
+## When completing work
+
+Update `memory-bank/tasks/TASK-NNN.md`:
+- add a line to Updates: `YYYY-MM-DD done <brief summary>`
 
 ## Output format
 

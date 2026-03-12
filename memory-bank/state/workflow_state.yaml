@@ -29,6 +29,13 @@ gates:
 
 blockers: []
 
+tasks: []
+# Format:
+# - id: TASK-001
+#   title: Define uplink payload validation
+#   owner: backend_developer
+#   status: pending | in_progress | done | blocked
+
 # Gate progression rules:
 # context_ready         <- product_owner sets context/project_context.md status: accepted
 # planning_complete     <- requires context_ready; pm + scrum master artifacts accepted

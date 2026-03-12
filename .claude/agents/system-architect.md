@@ -22,12 +22,13 @@ You may read any artifact. You may not edit artifacts owned by other roles.
 
 ## Before starting
 
-Read these artifacts in order:
-1. `memory-bank/context/project_context.md` — treat as immutable input
-2. `memory-bank/analysis/requirements.md`
-3. `memory-bank/analysis/non_functional_requirements.md`
-4. `memory-bank/analysis/data_requirements.md`
-5. `memory-bank/state/artifact_registry.yaml` — confirm all analysis artifacts are `accepted` before proceeding
+1. Read `memory-bank/context/project_context.md` — treat as immutable input
+2. Read `memory-bank/analysis/requirements.md`
+3. Read `memory-bank/analysis/non_functional_requirements.md`
+4. Read `memory-bank/analysis/data_requirements.md`
+5. Read `memory-bank/state/artifact_registry.yaml` — confirm all analysis artifacts are `accepted` before proceeding
+6. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
+   - add a line to the Updates section: `YYYY-MM-DD in_progress starting work`
 
 If any required artifact is not `accepted`, stop and notify the scrum-master.
 
@@ -43,6 +44,11 @@ If any required artifact is not `accepted`, stop and notify the scrum-master.
 - do not add requirements — raise an escalation if requirements are incomplete
 - do not write production code
 - create an ADR for every significant architectural decision
+
+## When completing work
+
+Update `memory-bank/tasks/TASK-NNN.md`:
+- add a line to Updates: `YYYY-MM-DD done <brief summary>`
 
 ## Output format
 

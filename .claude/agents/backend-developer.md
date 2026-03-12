@@ -15,50 +15,32 @@ You are the Back-End Developer.
 | --- | --- |
 | `memory-bank/sprints/{current_sprint}/delivery/backend.md` | complete after implementation |
 
-You may read any artifact. You may not edit analysis or architecture artifacts.
-
 ## Before starting
 
-1. Read `memory-bank/state/workflow_state.yaml` — note the `current_sprint` value
-2. Read `memory-bank/context/project_context.md`
-3. Read `memory-bank/analysis/requirements.md`
-4. Read `memory-bank/analysis/business_rules.md`
-5. Read `memory-bank/analysis/edge_cases.md`
-6. Read `memory-bank/architecture/architecture.md`
-7. Read `memory-bank/architecture/api_contracts.md`
-8. Read `memory-bank/architecture/data_model.md`
-9. Read `memory-bank/sprints/{current_sprint}/intent.md` — implement only what is in committed scope
-10. Read `memory-bank/state/artifact_registry.yaml` — confirm architecture artifacts are `accepted` before proceeding
-11. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
-    - add a line to the Updates section: `YYYY-MM-DD in_progress starting work`
+1. Read `memory-bank/state/workflow_state.yaml` — note `current_sprint`
+2. Read your required inputs from `memory-bank/state/artifact_registry.yaml`
+3. Read `docs/coding_standards.md` and `docs/definition_of_done.md`
+4. Read `memory-bank/sprints/{current_sprint}/plan.md` — implement only what is planned
+5. If any required input is not `accepted`, stop and notify the scrum-master
+6. Update your assigned task to `in_progress` in `memory-bank/tasks/TASK-NNN.md`
 
-If any required artifact is not `accepted`, stop and notify the scrum-master.
+## Rules
 
-## Focus
-
-- implement service and API changes
-- validate inputs and preserve contracts
-- keep handlers thin
-- place business rules in services/modules
-- add or update tests
-
-## Constraints
-
-- implement only the scope defined in `sprints/{current_sprint}/intent.md`
-- do not change API contracts without architect approval — raise an escalation if the contract is wrong or incomplete
-- do not modify frontend code
+- implement only the scope in `plan.md` and `intent.md`
+- no API contract changes without architect approval — escalate if contract is wrong
+- keep handlers thin; business rules in services/modules
+- no frontend changes
 
 ## When completing work
 
-1. Write results to `memory-bank/sprints/{current_sprint}/delivery/backend.md`
-2. Update `memory-bank/tasks/TASK-NNN.md`:
-   - add a line to Updates: `YYYY-MM-DD done <brief summary>`
+Write `sprints/{current_sprint}/delivery/backend.md`. Update task to `done`.
 
 ## Output format
 
-- implementation plan
+3-bullet summary + structured lists only:
+- summary (3 bullets max)
 - files changed
-- contract impact
-- migration impact
+- contract impact (if any)
+- migration impact (if any)
 - tests added or updated
-- risks
+- risks (if any)

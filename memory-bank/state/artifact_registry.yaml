@@ -1,0 +1,183 @@
+artifacts:
+  context/project_context.md:
+    owner: product_owner
+    version: "0.1"
+    status: draft
+    immutable_for_non_po: true
+    depends_on: []
+
+  context/project_context_change_log.md:
+    owner: product_owner
+    status: active
+    immutable_for_non_po: true
+    depends_on: []
+
+  planning/roadmap.md:
+    owner: product_manager
+    status: draft
+    depends_on:
+      - context/project_context.md
+
+  planning/epics.md:
+    owner: product_manager
+    status: draft
+    depends_on:
+      - context/project_context.md
+      - planning/roadmap.md
+
+  planning/backlog.md:
+    owner: product_manager
+    status: draft
+    depends_on:
+      - planning/epics.md
+
+  planning/sprint_intent.md:
+    owner: scrum_master
+    status: draft
+    depends_on:
+      - planning/backlog.md
+      - context/project_context.md
+
+  planning/release_plan.md:
+    owner: product_manager
+    status: draft
+    depends_on:
+      - planning/roadmap.md
+      - planning/backlog.md
+
+  analysis/requirements.md:
+    owner: business_analyst
+    status: draft
+    depends_on:
+      - context/project_context.md
+      - planning/epics.md
+      - planning/sprint_intent.md
+
+  analysis/non_functional_requirements.md:
+    owner: business_analyst
+    status: draft
+    depends_on:
+      - context/project_context.md
+      - analysis/requirements.md
+
+  analysis/business_rules.md:
+    owner: business_analyst
+    status: draft
+    depends_on:
+      - context/project_context.md
+      - analysis/requirements.md
+
+  analysis/edge_cases.md:
+    owner: business_analyst
+    status: draft
+    depends_on:
+      - analysis/requirements.md
+      - analysis/business_rules.md
+
+  analysis/data_requirements.md:
+    owner: business_analyst
+    status: draft
+    depends_on:
+      - analysis/requirements.md
+
+  architecture/architecture.md:
+    owner: system_architect
+    status: draft
+    depends_on:
+      - context/project_context.md
+      - analysis/requirements.md
+      - analysis/non_functional_requirements.md
+
+  architecture/api_contracts.md:
+    owner: system_architect
+    status: draft
+    depends_on:
+      - architecture/architecture.md
+      - analysis/requirements.md
+
+  architecture/data_model.md:
+    owner: system_architect
+    status: draft
+    depends_on:
+      - analysis/data_requirements.md
+      - architecture/architecture.md
+
+  delivery/frontend_delivery.md:
+    owner: frontend_developer
+    status: draft
+    depends_on:
+      - context/project_context.md
+      - analysis/requirements.md
+      - architecture/architecture.md
+
+  delivery/backend_delivery.md:
+    owner: backend_developer
+    status: draft
+    depends_on:
+      - context/project_context.md
+      - analysis/requirements.md
+      - architecture/architecture.md
+      - architecture/api_contracts.md
+
+  delivery/devops_delivery.md:
+    owner: devops_engineer
+    status: draft
+    depends_on:
+      - architecture/architecture.md
+      - delivery/backend_delivery.md
+      - delivery/frontend_delivery.md
+
+  quality/test_strategy.md:
+    owner: qa_tester
+    status: draft
+    depends_on:
+      - analysis/requirements.md
+      - analysis/edge_cases.md
+      - planning/sprint_intent.md
+
+  quality/test_report.md:
+    owner: qa_tester
+    status: draft
+    depends_on:
+      - quality/test_strategy.md
+      - delivery/frontend_delivery.md
+      - delivery/backend_delivery.md
+
+  quality/security_review.md:
+    owner: security_officer
+    status: draft
+    depends_on:
+      - architecture/architecture.md
+      - analysis/requirements.md
+      - quality/test_report.md
+
+  quality/threat_model.md:
+    owner: security_officer
+    status: draft
+    depends_on:
+      - architecture/architecture.md
+      - analysis/data_requirements.md
+
+  quality/compliance_notes.md:
+    owner: security_officer
+    status: draft
+    depends_on:
+      - context/project_context.md
+      - analysis/data_requirements.md
+
+  reviews/sprint_review.md:
+    owner: scrum_master
+    status: draft
+    depends_on:
+      - planning/sprint_intent.md
+      - delivery/frontend_delivery.md
+      - delivery/backend_delivery.md
+      - delivery/devops_delivery.md
+      - quality/test_report.md
+      - quality/security_review.md
+
+  reviews/po_decision.md:
+    owner: product_owner
+    status: draft
+    depends_on:
+      - reviews/sprint_review.md

@@ -1,0 +1,41 @@
+project:
+  name: ""
+  active_context_version: "0.1"
+  sprint: ""
+  status: draft
+
+roles:
+  product_owner: pending
+  product_manager: pending
+  scrum_master: pending
+  business_analyst: pending
+  system_architect: pending
+  frontend_developer: pending
+  backend_developer: pending
+  devops_engineer: pending
+  qa_tester: pending
+  security_officer: pending
+
+gates:
+  context_ready: false
+  planning_complete: false
+  analysis_complete: false
+  architecture_complete: false
+  implementation_complete: false
+  qa_complete: false
+  security_complete: false
+  sprint_review_ready: false
+  po_decision_made: false
+
+blockers: []
+
+# Gate progression rules:
+# context_ready         <- product_owner sets context/project_context.md status: accepted
+# planning_complete     <- requires context_ready; pm + scrum master artifacts accepted
+# analysis_complete     <- requires planning_complete; all analysis/* artifacts accepted
+# architecture_complete <- requires analysis_complete; all architecture/* artifacts accepted
+# implementation_complete <- requires architecture_complete; delivery/* artifacts accepted
+# qa_complete           <- requires implementation_complete; quality/test_report.md accepted
+# security_complete     <- requires architecture_complete; quality/security_review.md accepted
+# sprint_review_ready   <- requires implementation_complete + qa_complete + security_complete
+# po_decision_made      <- requires sprint_review_ready; reviews/po_decision.md completed

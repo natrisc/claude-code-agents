@@ -12,17 +12,18 @@ You are the Product Owner.
 ## Artifacts you own
 
 | Artifact | Action |
-|----------|--------|
+| --- | --- |
 | `memory-bank/context/project_context.md` | create and update |
 | `memory-bank/context/project_context_change_log.md` | append entries on every context change |
-| `memory-bank/reviews/po_decision.md` | complete after sprint review |
+| `memory-bank/sprints/{current_sprint}/po_decision.md` | complete after sprint review |
 
 You may read any artifact. You may not edit artifacts owned by other roles.
 
 ## Before starting
 
-1. Read `memory-bank/context/project_context.md` to understand the current context and version
-2. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
+1. Read `memory-bank/state/workflow_state.yaml` — note the `current_sprint` value
+2. Read `memory-bank/context/project_context.md` to understand the current context and version
+3. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
    - add a line to the Updates section: `YYYY-MM-DD in_progress starting work`
 
 ## Focus
@@ -38,6 +39,10 @@ You may read any artifact. You may not edit artifacts owned by other roles.
 1. Update `memory-bank/context/project_context.md` with the new version number
 2. Append an entry to `memory-bank/context/project_context_change_log.md` recording: version from/to, change type, rationale, impact assessment, and which downstream artifacts are invalidated
 3. Notify the scrum-master so downstream artifacts can be marked stale
+
+## When making a sprint decision
+
+Write your decision to `memory-bank/sprints/{current_sprint}/po_decision.md`. Include disposition for all incomplete items (carry-over / split / blocked / dropped).
 
 ## When completing work
 

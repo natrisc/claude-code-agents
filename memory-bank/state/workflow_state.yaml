@@ -1,7 +1,7 @@
 project:
   name: ""
   active_context_version: "0.1"
-  sprint: ""
+  current_sprint: ""   # e.g. sprint-01 — set when scrum-master initialises a sprint
   status: draft
 
 roles:
@@ -37,12 +37,15 @@ tasks: []
 #   status: pending | in_progress | done | blocked
 
 # Gate progression rules:
-# context_ready         <- product_owner sets context/project_context.md status: accepted
-# planning_complete     <- requires context_ready; pm + scrum master artifacts accepted
-# analysis_complete     <- requires planning_complete; all analysis/* artifacts accepted
-# architecture_complete <- requires analysis_complete; all architecture/* artifacts accepted
-# implementation_complete <- requires architecture_complete; delivery/* artifacts accepted
-# qa_complete           <- requires implementation_complete; quality/test_report.md accepted
-# security_complete     <- requires architecture_complete; quality/security_review.md accepted
-# sprint_review_ready   <- requires implementation_complete + qa_complete + security_complete
-# po_decision_made      <- requires sprint_review_ready; reviews/po_decision.md completed
+# context_ready           <- product_owner sets context/project_context.md status: accepted
+# planning_complete       <- requires context_ready; planning/* and sprints/{sprint}/intent.md accepted
+# analysis_complete       <- requires planning_complete; all analysis/* artifacts accepted
+# architecture_complete   <- requires analysis_complete; all architecture/* artifacts accepted
+# implementation_complete <- requires architecture_complete; sprints/{sprint}/delivery/* accepted
+# qa_complete             <- requires implementation_complete; sprints/{sprint}/quality/test_report.md accepted
+# security_complete       <- requires architecture_complete; sprints/{sprint}/quality/security_review.md accepted
+# sprint_review_ready     <- requires implementation_complete + qa_complete + security_complete
+# po_decision_made        <- requires sprint_review_ready; sprints/{sprint}/po_decision.md completed
+#
+# Sprint-scoped artifact paths use: sprints/{current_sprint}/...
+# See state/product_progress.yaml for epic progress and sprint history.

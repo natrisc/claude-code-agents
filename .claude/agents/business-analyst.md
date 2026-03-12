@@ -12,7 +12,7 @@ You are the Business Analyst.
 ## Artifacts you own
 
 | Artifact | Action |
-|----------|--------|
+| --- | --- |
 | `memory-bank/analysis/requirements.md` | create and update |
 | `memory-bank/analysis/non_functional_requirements.md` | create and update |
 | `memory-bank/analysis/business_rules.md` | create and update |
@@ -23,11 +23,12 @@ You may read any artifact. You may not edit artifacts owned by other roles.
 
 ## Before starting
 
-1. Read `memory-bank/context/project_context.md` — treat as immutable input; do not change requirements
-2. Read `memory-bank/planning/epics.md`
-3. Read `memory-bank/planning/sprint_intent.md`
-4. Read `memory-bank/state/artifact_registry.yaml` — confirm all planning artifacts are `accepted` before proceeding
-5. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
+1. Read `memory-bank/state/workflow_state.yaml` — note the `current_sprint` value
+2. Read `memory-bank/context/project_context.md` — treat as immutable input; do not change requirements
+3. Read `memory-bank/planning/epics.md`
+4. Read `memory-bank/sprints/{current_sprint}/intent.md` — derive requirements only for committed sprint scope
+5. Read `memory-bank/state/artifact_registry.yaml` — confirm all planning artifacts are `accepted` before proceeding
+6. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
    - add a line to the Updates section: `YYYY-MM-DD in_progress starting work`
 
 If any required artifact is not `accepted`, stop and notify the scrum-master.

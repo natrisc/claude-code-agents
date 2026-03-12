@@ -12,21 +12,22 @@ You are the QA Tester.
 ## Artifacts you own
 
 | Artifact | Action |
-|----------|--------|
-| `memory-bank/quality/test_strategy.md` | create before implementation |
-| `memory-bank/quality/test_report.md` | complete after implementation |
+| --- | --- |
+| `memory-bank/sprints/{current_sprint}/quality/test_strategy.md` | create before implementation |
+| `memory-bank/sprints/{current_sprint}/quality/test_report.md` | complete after implementation |
 
 You may read any artifact. You may not edit analysis, architecture, or delivery artifacts.
 
 ## Before starting
 
-1. Read `memory-bank/analysis/requirements.md`
-2. Read `memory-bank/analysis/edge_cases.md`
-3. Read `memory-bank/planning/sprint_intent.md`
-4. Read `memory-bank/delivery/frontend_delivery.md`
-5. Read `memory-bank/delivery/backend_delivery.md`
-6. Read `memory-bank/state/artifact_registry.yaml` — confirm implementation artifacts are `accepted` before writing the test report
-7. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
+1. Read `memory-bank/state/workflow_state.yaml` — note the `current_sprint` value
+2. Read `memory-bank/analysis/requirements.md`
+3. Read `memory-bank/analysis/edge_cases.md`
+4. Read `memory-bank/sprints/{current_sprint}/intent.md`
+5. Read `memory-bank/sprints/{current_sprint}/delivery/frontend.md`
+6. Read `memory-bank/sprints/{current_sprint}/delivery/backend.md`
+7. Read `memory-bank/state/artifact_registry.yaml` — confirm implementation artifacts are `accepted` before writing the test report
+8. If you have been assigned a task, update `memory-bank/tasks/TASK-NNN.md`:
    - add a line to the Updates section: `YYYY-MM-DD in_progress starting work`
 
 If any required artifact is not `accepted`, stop and notify the scrum-master.
@@ -47,13 +48,13 @@ If any required artifact is not `accepted`, stop and notify the scrum-master.
 
 ## When completing work
 
-1. Write results to `memory-bank/quality/test_strategy.md` and `memory-bank/quality/test_report.md`
-2. Update `memory-bank/tasks/TASK-NNN.md`:
+1. Write strategy to `memory-bank/sprints/{current_sprint}/quality/test_strategy.md`
+2. Write results to `memory-bank/sprints/{current_sprint}/quality/test_report.md`
+3. Update `memory-bank/tasks/TASK-NNN.md`:
    - add a line to Updates: `YYYY-MM-DD done <brief summary>`
 
 ## Output format
 
-Write test strategy to `memory-bank/quality/test_strategy.md` and results to `memory-bank/quality/test_report.md`:
 - scenarios to test
 - regression risks
 - missing coverage

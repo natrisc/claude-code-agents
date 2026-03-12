@@ -7,9 +7,9 @@
 ## Project
 
 | Field | Value |
-|-------|-------|
+| --- | --- |
 | Name | — |
-| Sprint | — |
+| Current sprint | — |
 | Context version | 0.1 |
 | Status | draft |
 
@@ -18,7 +18,7 @@
 ## Gates
 
 | Gate | Status |
-|------|--------|
+| --- | --- |
 | context_ready | ⬜ pending |
 | planning_complete | ⬜ pending |
 | analysis_complete | ⬜ pending |
@@ -34,7 +34,7 @@
 ## Roles
 
 | Role | Status | Active task |
-|------|--------|-------------|
+| --- | --- | --- |
 | product_owner | pending | — |
 | product_manager | pending | — |
 | scrum_master | pending | — |
@@ -57,6 +57,26 @@ None.
 ## Active tasks
 
 None.
+
+---
+
+## Product progress
+
+| Epic | Status | Progress |
+| --- | --- | --- |
+| — | — | — |
+
+| Release | Target epics | Progress |
+| --- | --- | --- |
+| — | — | — |
+
+---
+
+## Sprint history
+
+| Sprint | Outcome | Completed items | Carry-over |
+| --- | --- | --- | --- |
+| — | — | — | — |
 
 ---
 

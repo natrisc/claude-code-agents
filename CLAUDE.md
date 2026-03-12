@@ -27,26 +27,43 @@ scrum-master enforces gate progression via `memory-bank/state/workflow_state.yam
 ```
 memory-bank/
   context/        ← project context (PO owned, immutable for others)
-  planning/       ← roadmap, epics, backlog, sprint intent (PM + SM owned)
-  analysis/       ← requirements, business rules, edge cases (BA owned)
-  architecture/   ← architecture, API contracts, data model, ADRs (architect owned)
-  delivery/       ← frontend, backend, devops delivery notes (developer owned)
-  quality/        ← test strategy, test report, security review (QA + security owned)
-  reviews/        ← sprint review, PO decision (SM + PO owned)
-  state/          ← workflow_state.yaml, artifact_registry.yaml (coordinator managed)
+  planning/       ← roadmap, epics, backlog, release plan (PM owned)
+  analysis/       ← requirements, business rules, edge cases (BA owned — spans sprints)
+  architecture/   ← architecture, API contracts, data model, ADRs (architect owned — spans sprints)
+  sprints/        ← one folder per sprint, e.g. sprints/sprint-01/
+    SPRINT-TEMPLATE/   ← copied by scrum-master to start each sprint
+    sprint-NNN/
+      intent.md            ← SM owned
+      delivery/            ← frontend.md, backend.md, devops.md (developer owned)
+      quality/             ← test_strategy.md, test_report.md, security_review.md (QA + security owned)
+      review.md            ← SM owned
+      po_decision.md       ← PO owned
+  state/          ← workflow_state.yaml, artifact_registry.yaml, product_progress.yaml, dashboard.md
+  tasks/          ← TASK-NNN.md files (SM created, agent updated)
   escalations/    ← ESC-NNN.md files for unresolved blockers
+  logs/           ← append-only events.log
 ```
 
-### Default delivery flow
+### Three-level delivery model
 
-1. PO publishes `context/project_context.md` → sets `context_ready: true`
-2. PM writes planning artifacts → sets `planning_complete: true`
-3. BA writes analysis artifacts → sets `analysis_complete: true`
-4. Architect writes architecture artifacts → sets `architecture_complete: true`
-5. FE + BE implement sprint scope → sets `implementation_complete: true`
-6. QA and Security review outputs → sets `qa_complete` and `security_complete: true`
-7. SM opens sprint review → sets `sprint_review_ready: true`
-8. PO makes decision in `reviews/po_decision.md` → sets `po_decision_made: true`
+| Level | Artifacts | Span |
+| --- | --- | --- |
+| Product | `context/`, `planning/roadmap.md`, `epics.md`, `release_plan.md` | all sprints |
+| Analysis + Architecture | `analysis/`, `architecture/` | updated per sprint as needed |
+| Sprint | `sprints/sprint-NNN/` | one sprint only |
+
+### Default delivery flow (per sprint)
+
+1. SM initialises `sprints/sprint-NNN/` from template, sets `current_sprint` in `workflow_state.yaml`
+2. PO confirms context is current → `context_ready: true`
+3. SM writes `sprints/sprint-NNN/intent.md` → `planning_complete: true`
+4. BA writes/updates analysis artifacts → `analysis_complete: true`
+5. Architect writes/updates architecture artifacts → `architecture_complete: true`
+6. FE + BE implement sprint scope → `implementation_complete: true`
+7. QA and Security write sprint quality artifacts → `qa_complete` and `security_complete: true`
+8. SM opens sprint review → `sprint_review_ready: true`
+9. PO writes `sprints/sprint-NNN/po_decision.md` → `po_decision_made: true`
+10. SM closes sprint: updates `product_progress.yaml`, moves carry-overs to backlog
 
 ### Escalation
 

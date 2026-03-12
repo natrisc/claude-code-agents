@@ -1,0 +1,33 @@
+product_context_version: "0.1"
+current_release: ""
+current_sprint: ""
+
+# Epic progress across all sprints
+epics: {}
+# Format:
+# E-01:
+#   title: Device onboarding
+#   status: not_started | in_progress | done | blocked
+#   completed_in_sprints: []
+#   remaining_scope: []
+
+# Release milestones
+releases: {}
+# Format:
+# MVP:
+#   goal: ""
+#   target_epics: []
+#   progress: 0         # percentage complete (0-100)
+#   blocked_by: []
+#   target_sprint_range: ""
+
+# Closed sprint history
+sprint_history: {}
+# Format:
+# sprint-01:
+#   goal: ""
+#   outcome: accepted | accepted_with_actions | rejected
+#   completed_items: []
+#   carry_over_items: []
+#   context_changed: false
+#   context_version_after: ""

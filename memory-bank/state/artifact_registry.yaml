@@ -1,4 +1,25 @@
+# Artifact Registry
+#
+# Product-level artifacts are listed here with fixed paths.
+# Sprint-scoped artifacts follow the pattern below — the scrum-master adds
+# entries for each sprint when it initialises a new sprint folder.
+#
+# Sprint artifact pattern:
+#   sprints/{sprint}/intent.md              owner: scrum_master
+#   sprints/{sprint}/delivery/frontend.md   owner: frontend_developer
+#   sprints/{sprint}/delivery/backend.md    owner: backend_developer
+#   sprints/{sprint}/delivery/devops.md     owner: devops_engineer
+#   sprints/{sprint}/quality/test_strategy.md  owner: qa_tester
+#   sprints/{sprint}/quality/test_report.md    owner: qa_tester
+#   sprints/{sprint}/quality/security_review.md  owner: security_officer
+#   sprints/{sprint}/quality/threat_model.md     owner: security_officer
+#   sprints/{sprint}/review.md              owner: scrum_master
+#   sprints/{sprint}/po_decision.md         owner: product_owner
+
 artifacts:
+
+  # ── Context (Product Owner) ──────────────────────────────────────────────
+
   context/project_context.md:
     owner: product_owner
     version: "0.1"
@@ -11,6 +32,8 @@ artifacts:
     status: active
     immutable_for_non_po: true
     depends_on: []
+
+  # ── Planning (Product Manager + Scrum Master) ────────────────────────────
 
   planning/roadmap.md:
     owner: product_manager
@@ -31,13 +54,6 @@ artifacts:
     depends_on:
       - planning/epics.md
 
-  planning/sprint_intent.md:
-    owner: scrum_master
-    status: draft
-    depends_on:
-      - planning/backlog.md
-      - context/project_context.md
-
   planning/release_plan.md:
     owner: product_manager
     status: draft
@@ -45,13 +61,14 @@ artifacts:
       - planning/roadmap.md
       - planning/backlog.md
 
+  # ── Analysis (Business Analyst) ──────────────────────────────────────────
+
   analysis/requirements.md:
     owner: business_analyst
     status: draft
     depends_on:
       - context/project_context.md
       - planning/epics.md
-      - planning/sprint_intent.md
 
   analysis/non_functional_requirements.md:
     owner: business_analyst
@@ -80,6 +97,8 @@ artifacts:
     depends_on:
       - analysis/requirements.md
 
+  # ── Architecture (System Architect) ─────────────────────────────────────
+
   architecture/architecture.md:
     owner: system_architect
     status: draft
@@ -102,82 +121,6 @@ artifacts:
       - analysis/data_requirements.md
       - architecture/architecture.md
 
-  delivery/frontend_delivery.md:
-    owner: frontend_developer
-    status: draft
-    depends_on:
-      - context/project_context.md
-      - analysis/requirements.md
-      - architecture/architecture.md
-
-  delivery/backend_delivery.md:
-    owner: backend_developer
-    status: draft
-    depends_on:
-      - context/project_context.md
-      - analysis/requirements.md
-      - architecture/architecture.md
-      - architecture/api_contracts.md
-
-  delivery/devops_delivery.md:
-    owner: devops_engineer
-    status: draft
-    depends_on:
-      - architecture/architecture.md
-      - delivery/backend_delivery.md
-      - delivery/frontend_delivery.md
-
-  quality/test_strategy.md:
-    owner: qa_tester
-    status: draft
-    depends_on:
-      - analysis/requirements.md
-      - analysis/edge_cases.md
-      - planning/sprint_intent.md
-
-  quality/test_report.md:
-    owner: qa_tester
-    status: draft
-    depends_on:
-      - quality/test_strategy.md
-      - delivery/frontend_delivery.md
-      - delivery/backend_delivery.md
-
-  quality/security_review.md:
-    owner: security_officer
-    status: draft
-    depends_on:
-      - architecture/architecture.md
-      - analysis/requirements.md
-      - quality/test_report.md
-
-  quality/threat_model.md:
-    owner: security_officer
-    status: draft
-    depends_on:
-      - architecture/architecture.md
-      - analysis/data_requirements.md
-
-  quality/compliance_notes.md:
-    owner: security_officer
-    status: draft
-    depends_on:
-      - context/project_context.md
-      - analysis/data_requirements.md
-
-  reviews/sprint_review.md:
-    owner: scrum_master
-    status: draft
-    depends_on:
-      - planning/sprint_intent.md
-      - delivery/frontend_delivery.md
-      - delivery/backend_delivery.md
-      - delivery/devops_delivery.md
-      - quality/test_report.md
-      - quality/security_review.md
-
-  reviews/po_decision.md:
-    owner: product_owner
-    status: draft
-    depends_on:
-      - reviews/sprint_review.md
+  # ── Sprint-scoped artifacts ──────────────────────────────────────────────
+  # Added dynamically by scrum-master on sprint initialisation.
+  # See pattern comment at top of file.

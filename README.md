@@ -18,13 +18,13 @@ Most developers use AI coding tools like this:
 
 The result is usually:
 
-- inconsistent architecture
+- inconsistent architecture across sprints
 - missing tests
 - security blind spots
 - no audit trail
-- fragile codebases that accumulate AI debt
+- AI drift — each session forgets what the last one decided
 
-The root cause is that AI assistants have no memory, no role boundaries, and no workflow discipline. Every prompt starts from scratch.
+The root cause is simple: AI assistants have no memory, no role boundaries, and no workflow discipline. Every prompt starts from scratch.
 
 ---
 
@@ -32,44 +32,52 @@ The root cause is that AI assistants have no memory, no role boundaries, and no 
 
 This repository implements a **repository-centric AI Scrum team** for Claude Code.
 
-Instead of relying on conversation context, agents communicate through **canonical documents** stored in the repository. Each agent reads specific input artifacts, writes to owned output artifacts, and the system enforces gate progression before any work proceeds.
+Instead of relying on conversation context, agents communicate through **canonical documents** in the repository. Each agent reads its required input artifacts, writes to its owned output artifacts, and the system enforces gate-based progression before any work proceeds.
 
-The result is a **structured delivery system** with:
-
-- clear role boundaries and ownership
-- artifact-driven workflow state
-- enforced gate progression
-- escalation handling
-- a full event log and sprint dashboard
+The product evolves across multiple sprints against one active product baseline — with formal change control, escalation handling, a full event log, and a live sprint dashboard.
 
 ---
 
 ## How It Works
 
-### The Memory Bank
+### One Product, Many Sprints
 
-The core of the system is `memory-bank/` — a structured folder that serves as the shared memory of the AI team.
+The system separates three concerns:
+
+| Level | What it answers | Artifacts |
+| --- | --- | --- |
+| **Product** | What are we building? | `context/`, `planning/roadmap.md`, `epics.md` |
+| **Architecture** | How is it structured? | `analysis/`, `architecture/` |
+| **Sprint** | What are we delivering now? | `sprints/sprint-NNN/` |
+
+Sprint outputs never overwrite each other. Every sprint has its own folder with its own delivery, quality, review, and decision artifacts. The product context is immutable unless the Product Owner formally changes it with a version bump and change log entry.
+
+### The Memory Bank
 
 ```text
 memory-bank/
-  context/        ← project context (Product Owner — immutable for others)
-  planning/       ← roadmap, epics, backlog, sprint intent
-  analysis/       ← requirements, business rules, edge cases
-  architecture/   ← architecture, API contracts, data model, ADRs
-  delivery/       ← frontend, backend, devops delivery notes
-  quality/        ← test strategy, test report, security review
-  reviews/        ← sprint review, PO decision
-  state/          ← workflow_state.yaml, artifact_registry.yaml, dashboard.md
-  tasks/          ← TASK-NNN.md files per routed piece of work
-  escalations/    ← ESC-NNN.md files for unresolved blockers
-  logs/           ← append-only event log
+  context/          ← project context (Product Owner — immutable for others)
+  planning/         ← roadmap, epics, backlog, release plan
+  analysis/         ← requirements, business rules, edge cases (spans sprints)
+  architecture/     ← architecture, API contracts, data model, ADRs (spans sprints)
+  sprints/
+    SPRINT-TEMPLATE/  ← copied to start each new sprint
+    sprint-01/
+      intent.md
+      delivery/     ← frontend.md, backend.md, devops.md
+      quality/      ← test_strategy.md, test_report.md, security_review.md
+      review.md
+      po_decision.md
+  state/            ← workflow_state.yaml, artifact_registry.yaml,
+  │                    product_progress.yaml, dashboard.md
+  tasks/            ← TASK-NNN.md per piece of routed work
+  escalations/      ← ESC-NNN.md for unresolved blockers
+  logs/             ← append-only event log
 ```
-
-Every agent reads its required inputs from here and writes its outputs back here. Nothing is held in conversation context.
 
 ### Gate Progression
 
-Work proceeds through a strict left-to-right state machine:
+Work proceeds through a strict gate-based state machine. The Scrum Master reads `workflow_state.yaml` before routing any work. If a gate is not satisfied, work does not proceed.
 
 ```text
 CONTEXT_READY
@@ -82,15 +90,36 @@ CONTEXT_READY
   → PO_DECISION_MADE
 ```
 
-The Scrum Master reads `workflow_state.yaml` before routing any work. If a gate is not satisfied, work does not proceed.
-
 ### Task Tracking
 
-Every time the Scrum Master routes work to a specialist, it creates a `TASK-NNN.md` file. The specialist updates it when they start and when they finish. The Scrum Master tracks all active tasks in `workflow_state.yaml` and regenerates `state/dashboard.md` after every state change.
+When the Scrum Master routes work, it creates a `TASK-NNN.md` file. The agent updates it on start and completion. All active tasks are tracked in `workflow_state.yaml`. The dashboard is regenerated after every state change.
+
+### Product Progress
+
+`state/product_progress.yaml` tracks the full product lifecycle across sprints:
+
+```yaml
+epics:
+  E-01:
+    title: User authentication
+    status: in_progress
+    completed_in_sprints: [sprint-01]
+
+releases:
+  MVP:
+    target_epics: [E-01, E-02]
+    progress: 45
+
+sprint_history:
+  sprint-01:
+    outcome: accepted
+    completed_items: [ITEM-001, ITEM-002]
+    carry_over_items: [ITEM-003]
+```
 
 ### Escalation Handling
 
-If any agent cannot proceed due to ambiguity or missing information, it raises an `ESC-NNN.md` escalation. The downstream work is blocked until the Product Owner resolves it. No agent may guess or work around an escalation.
+If any agent cannot proceed due to ambiguity or missing information, it raises an `ESC-NNN.md` file. Downstream work is blocked until the Product Owner resolves it. No agent may guess or work around an escalation.
 
 ---
 
@@ -98,52 +127,44 @@ If any agent cannot proceed due to ambiguity or missing information, it raises a
 
 | Role | Owns | Reads |
 | --- | --- | --- |
-| Product Owner | `context/*`, `reviews/po_decision.md` | everything |
+| Product Owner | `context/*`, `sprints/{sprint}/po_decision.md` | everything |
 | Product Manager | `planning/roadmap.md`, `epics.md`, `backlog.md` | context |
-| Scrum Master | `planning/sprint_intent.md`, `state/*`, `tasks/*` | everything |
+| Scrum Master | `sprints/{sprint}/intent.md`, `state/*`, `tasks/*` | everything |
 | Business Analyst | `analysis/*` | context, planning |
 | System Architect | `architecture/*` | context, analysis |
-| Frontend Developer | `delivery/frontend_delivery.md` | context, analysis, architecture |
-| Backend Developer | `delivery/backend_delivery.md` | context, analysis, architecture |
-| DevOps Engineer | `delivery/devops_delivery.md` | architecture, delivery |
-| QA Tester | `quality/test_strategy.md`, `quality/test_report.md` | analysis, delivery |
-| Security Officer | `quality/security_review.md`, `quality/threat_model.md` | architecture, analysis, quality |
+| Frontend Developer | `sprints/{sprint}/delivery/frontend.md` | context, analysis, architecture |
+| Backend Developer | `sprints/{sprint}/delivery/backend.md` | context, analysis, architecture |
+| DevOps Engineer | `sprints/{sprint}/delivery/devops.md` | architecture, delivery |
+| QA Tester | `sprints/{sprint}/quality/test_*.md` | analysis, delivery |
+| Security Officer | `sprints/{sprint}/quality/security_review.md` | architecture, analysis, quality |
 
 Role boundaries are strict. No agent edits artifacts owned by another role.
 
 ---
 
-## Example Sprint
+## Example: Two Sprints Toward a Product
 
-User request: Add OAuth login with Google.
+**Product context**: Build a device telemetry platform.
 
-### Step 1 — Context
+### Sprint 1 — Core ingestion pipeline
 
-Product Owner defines goals, constraints, and acceptance criteria in `context/project_context.md`. Sets `context_ready: true`.
+1. PO confirms product context. SM initialises `sprints/sprint-01/`
+2. BA derives requirements for the ingestion scope
+3. Architect designs the pipeline and data model
+4. BE implements the ingestion service. FE builds the status dashboard
+5. QA validates. Security reviews the data pipeline
+6. SM opens sprint review. PO accepts with one carry-over item
+7. SM closes sprint: updates epic progress, moves carry-over to backlog
 
-### Step 2 — Planning
+### Sprint 2 — Alerting and notifications
 
-Product Manager writes roadmap, epics, and backlog items. Scrum Master writes sprint intent. Gate: `planning_complete: true`.
+1. SM initialises `sprints/sprint-02/` — sprint-01 history is preserved
+2. BA updates requirements for alerting scope. Architect extends the data model
+3. BE implements alert rules. FE adds notification UI
+4. QA validates. Security reviews the alert dispatch path
+5. PO accepts. Epic E-01 moves to `done` in `product_progress.yaml`
 
-### Step 3 — Analysis
-
-Business Analyst derives requirements, business rules, and edge cases from context and planning. Gate: `analysis_complete: true`.
-
-### Step 4 — Architecture
-
-System Architect designs OAuth flow, token handling, API contracts. Creates ADR. Gate: `architecture_complete: true`.
-
-### Step 5 — Implementation *(parallel)*
-
-Backend Developer implements OAuth service. Frontend Developer builds login UI. Both update their TASK files. Gate: `implementation_complete: true`.
-
-### Step 6 — Quality *(parallel)*
-
-QA Tester validates against requirements. Security Officer reviews token handling and secrets exposure. Gates: `qa_complete: true`, `security_complete: true`.
-
-### Step 7 — Sprint Review
-
-Scrum Master opens sprint review. Product Owner accepts, rejects, or requests changes. Gate: `po_decision_made: true`.
+At any point: `state/dashboard.md` shows the full picture — gates, active tasks, epic progress, sprint history, recent events.
 
 ---
 
@@ -155,20 +176,9 @@ Scrum Master opens sprint review. Product Owner accepts, rejects, or requests ch
 ├── README.md
 ├── .mcp.json                  ← external system integrations
 ├── memory-bank/               ← shared agent memory
-│   ├── context/
-│   ├── planning/
-│   ├── analysis/
-│   ├── architecture/
-│   ├── delivery/
-│   ├── quality/
-│   ├── reviews/
-│   ├── state/
-│   ├── tasks/
-│   ├── escalations/
-│   └── logs/
 └── .claude/
     ├── settings.json          ← permissions and guardrails
-    ├── agents/                ← 9 specialist agent definitions
+    ├── agents/                ← 10 specialist agent definitions
     ├── skills/                ← 11 reusable workflow skills
     ├── rules/                 ← stack-specific engineering standards
     └── hooks/                 ← automated safety checks
@@ -205,10 +215,10 @@ npm install -g @anthropic-ai/claude-code
 ### 2. Clone this repository into your project
 
 ```bash
-git clone https://github.com/natrisc/claude-code-agents .claude-agents
+git clone https://github.com/natrisc/claude-code-agents
 ```
 
-Or copy the relevant files into your existing project.
+Or copy the `.claude/` and `memory-bank/` folders into an existing project.
 
 ### 3. Make hooks executable
 
@@ -224,7 +234,13 @@ claude
 
 ### 5. Fill in the project context
 
-Open `memory-bank/context/project_context.md` and complete the template. Then set its status to `accepted` in `memory-bank/state/artifact_registry.yaml`. This opens the first gate and starts the workflow.
+Open `memory-bank/context/project_context.md` and complete the template.
+Set its status to `accepted` in `memory-bank/state/artifact_registry.yaml`.
+This opens the first gate.
+
+### 6. Start your first sprint
+
+Ask Claude to initialise sprint-01. The Scrum Master will copy the sprint template, set the current sprint in `workflow_state.yaml`, and begin routing work.
 
 ---
 
@@ -303,8 +319,8 @@ I help engineering teams implement structured AI delivery workflows using Claude
 Services:
 
 - Claude Code workflow setup for your codebase
-- AI development workflow audits
-- Agentic SDLC design and implementation
+- AI development workflow design and implementation
+- Agentic SDLC consulting
 
 Contact: [coen@appvia.io](mailto:coen@appvia.io)
 

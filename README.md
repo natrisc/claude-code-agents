@@ -322,7 +322,7 @@ Services:
 - AI development workflow design and implementation
 - Agentic SDLC consulting
 
-Contact: [coen@appvia.io](mailto:coen@appvia.io)
+Contact: [coen@appvia.io](mailto:coen@appvia.nl)
 
 ---
 

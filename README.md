@@ -204,6 +204,207 @@ Claude's shell access is restricted in `settings.json`:
 
 ---
 
+## Git Workflow
+
+This repository follows a **human-supervised AI delivery workflow**.
+
+Claude helps plan, implement, review, and validate changes.  
+A human developer remains responsible for final approval and merging.
+
+### Who makes code changes?
+
+Claude can:
+
+- analyze requirements
+- propose a plan
+- implement code changes
+- add or update tests
+- review code quality
+- review test quality
+- suggest a commit message
+
+A human developer is responsible for:
+
+- deciding when work is ready
+- reviewing the final diff
+- approving commits and pushes
+- opening and merging pull requests
+
+### Who commits?
+
+Default model:
+
+- Claude prepares the change
+- Claude may suggest a Conventional Commit message
+- the human developer decides whether to commit
+- the human developer decides whether to push
+
+If you explicitly use the `QGIT` shortcut, Claude may:
+
+1. stage changes
+2. create a commit
+3. push the branch
+
+That workflow should be treated as **opt-in**, not automatic. The existing shortcut guidance already frames `QGIT` as the explicit command for staging, committing, and pushing. :contentReference[oaicite:0]{index=0}
+
+### Branch Strategy
+
+Use **short-lived feature branches**.
+
+Recommended naming:
+
+- `feat/<short-description>`
+- `fix/<short-description>`
+- `refactor/<short-description>`
+- `chore/<short-description>`
+
+Examples:
+
+git checkout -b feat/linkedin-publishing
+git checkout -b fix/instagram-timeout
+git checkout -b refactor/publisher-abstraction
+Default Change Flow
+
+The recommended flow is:
+
+Create a branch
+
+Ask Claude to plan the change
+
+Ask Claude to implement the change
+
+Review the diff
+
+Run checks and tests
+
+Commit with a Conventional Commit message
+
+Push the branch
+
+Open a pull request
+
+Review and merge
+
+### In practice:
+
+Create branch
+→ QPLAN
+→ QCODE
+→ QCHECK
+→ QCHECKT
+→ review diff
+→ commit
+→ push
+→ PR
+→ merge
+
+### Pull Request Workflow
+
+Each meaningful change should go through a pull request.
+
+A good PR should include:
+
+what changed
+
+why it changed
+
+affected areas
+
+tests run
+
+known risks
+
+rollout or migration notes if relevant
+
+Claude can help draft this summary.
+
+### Commit Message Format
+
+Use Conventional Commits.
+
+Examples:
+
+feat(api): add linkedin publishing endpoint
+fix(web): handle expired auth token redirect
+refactor(shared): simplify social media validation
+test(api): add publish failure integration coverage
+
+Do not mention Claude or Anthropic in commit messages. That rule is already part of the repo guidance. 
+
+CLAUDE
+
+Merge Strategy
+
+Prefer:
+
+small pull requests
+
+one logical change per PR
+
+squash merge for cleanup when appropriate
+
+Avoid:
+
+long-running branches
+
+mixing unrelated refactors with feature work
+
+direct commits to main
+
+Protected Branch Recommendation
+
+Protect main with:
+
+required PR review
+
+required status checks
+
+no force push
+
+no direct push
+
+Recommended required checks:
+
+tests
+
+lint
+
+typecheck
+
+any security or build checks used by the project
+
+Release Flow
+
+For release-sensitive changes:
+
+complete implementation
+
+run QCHECK
+
+run QCHECKT
+
+run release-readiness review
+
+confirm rollback notes
+
+merge via PR
+
+deploy through normal CI/CD pipeline
+
+Recommended Ownership Model
+
+The cleanest model for teams is:
+
+Claude owns implementation assistance
+
+the engineer owns repository history
+
+the team owns merge and release decisions
+
+This keeps AI fast, while keeping git history and production responsibility under human control.
+
+---
+
 ## Setup
 
 ### 1. Install Claude Code

@@ -2,11 +2,18 @@
   "mcpServers": {
     "github": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"]
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
     },
     "filesystem-docs": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./docs"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "./memory-bank"
+      ]
     },
     "postgres": {
       "command": "npx",
@@ -15,7 +22,5 @@
         "DATABASE_URL": "postgresql://USER:PASSWORD@HOST:5432/DBNAME"
       }
     }
-
-    
   }
 }

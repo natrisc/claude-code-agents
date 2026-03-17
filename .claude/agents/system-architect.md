@@ -39,6 +39,22 @@ You are the System Architect.
 Write `sprints/{current_sprint}/plan.md` first — developers read this before implementing.
 Update task to `done` in `memory-bank/tasks/TASK-NNN.md`.
 
+## Definition of done
+
+Before telling the scrum-master you are done:
+
+1. `memory-bank/sprints/{current_sprint}/plan.md` exists with Changed files table, Approach, and Risks filled
+2. All three architecture artifacts exist and have no placeholder text:
+   - `memory-bank/architecture/architecture.md`
+   - `memory-bank/architecture/api_contracts.md`
+   - `memory-bank/architecture/data_model.md`
+3. Any significant decision has a corresponding `memory-bank/architecture/adrs/ADR-NNN.md`
+4. Implementation can proceed without architectural ambiguity — if not, escalate before marking done
+5. Fill the `Evidence` section in `TASK-NNN.md` listing all produced artifact paths
+6. Set `Status` to `done` and `Completed` to today's date in `TASK-NNN.md`
+
+The scrum-master will run `validate_task.py` and `validate_gate.py`. Your task is not accepted until both return PASS.
+
 ## Output format
 
 **Sprint plan** (`sprints/{current_sprint}/plan.md`): changed files table + approach (max 150 words) + risks

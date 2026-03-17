@@ -1,25 +1,37 @@
 # TASK-NNN: <Title>
 
 **Owner**: <!-- role -->
-**Sprint**: <!-- sprint name or number -->
-**Status**: pending | in_progress | done | blocked
+**Sprint**: <!-- sprint name, e.g. sprint-01 -->
+**Status**: queued | in_progress | blocked | done
 **Created**: <!-- YYYY-MM-DD -->
+**Started**: <!-- YYYY-MM-DD or blank -->
+**Completed**: <!-- YYYY-MM-DD or blank -->
 
 ---
 
 ## Objective
 
-<!-- What this task must produce -->
+<!-- What this task must produce — one sentence -->
 
-## Depends on
+## Input artifacts
 
-<!-- Artifact paths that must be accepted before this task can start -->
+<!-- Artifact paths in memory-bank/ that must exist before this task can start -->
 - <!-- e.g. analysis/requirements.md -->
 
-## Output artifact
+## Output artifacts
 
-<!-- The memory-bank artifact this task produces -->
-- <!-- e.g. delivery/backend_delivery.md -->
+<!-- Artifact paths in memory-bank/ that this task produces — must exist before task is marked done -->
+- <!-- e.g. sprints/sprint-01/delivery/backend.md -->
+
+## Blocked by
+
+<!-- ESC-NNN references if status is blocked, or "none" -->
+- none
+
+## Evidence
+
+<!-- Filled in when marking done. List output artifact paths and confirm they are non-empty -->
+<!-- e.g. sprints/sprint-01/delivery/backend.md — written and complete -->
 
 ---
 

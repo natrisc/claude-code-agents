@@ -44,10 +44,14 @@ npm install -g @anthropic-ai/claude-code
 git clone https://github.com/natrisc/claude-code-agents
 cd claude-code-agents
 
-# 3. Make hooks executable
-chmod +x .claude/hooks/*.sh
+# 3. Install Python dependencies
+pip install pyyaml
 
-# 4. Start Claude
+# 4. Make hooks and scripts executable
+chmod +x .claude/hooks/*.sh
+chmod +x workflow/scripts/*.py
+
+# 5. Start Claude
 claude
 ```
 
@@ -63,7 +67,7 @@ Full setup instructions: [docs/setup.md](docs/setup.md)
 
 - **Repository-centric memory** — agents read and write files, not conversation history
 - **Role boundaries** — 10 specialist agents, each owning specific artifacts
-- **Gate progression** — work cannot proceed until the previous gate is satisfied
+- **Gate progression** — work cannot proceed until the previous gate is validated by `validate_gate.py`
 - **Multi-sprint continuity** — product context, architecture, and analysis persist across sprints
 
 ---
@@ -77,6 +81,7 @@ Full setup instructions: [docs/setup.md](docs/setup.md)
 | Memory bank architecture | [docs/memory-bank.md](docs/memory-bank.md) |
 | AI Scrum team roles | [docs/roles.md](docs/roles.md) |
 | Workflow & gate system | [docs/workflow.md](docs/workflow.md) |
+| Enforcement layer | [docs/enforcement.md](docs/enforcement.md) |
 | Architecture | [docs/architecture.md](docs/architecture.md) |
 | Git workflow | [docs/git-workflow.md](docs/git-workflow.md) |
 | MCP integrations | [docs/integrations.md](docs/integrations.md) |

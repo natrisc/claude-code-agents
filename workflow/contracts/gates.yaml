@@ -1,0 +1,94 @@
+# Gate contract definitions.
+# validate_gate.py reads this file to determine PASS/FAIL for each gate.
+#
+# A gate PASSES when:
+#   - all prerequisite_gates are already open (flags true in workflow_state.yaml)
+#   - all required_files exist on disk (non-empty, under memory-bank/)
+#
+# Path tokens:
+#   {current_sprint} — resolved at runtime from workflow_state.yaml project.current_sprint
+#   All paths are relative to memory-bank/
+#
+# Gate progression order:
+#   context_ready → planning_complete → analysis_complete →
+#   architecture_complete → implementation_complete →
+#   qa_complete + security_complete → sprint_review_ready → po_decision_made
+
+gates:
+
+  context_ready:
+    prerequisite_gates: []
+    required_files:
+      - context/project_context.md
+    description: "PO has confirmed context is current and sprint folder exists"
+
+  planning_complete:
+    prerequisite_gates:
+      - context_ready
+    required_files:
+      - sprints/{current_sprint}/intent.md
+    task_list_nonempty: true
+    description: "SM has written sprint intent and created at least one task"
+
+  analysis_complete:
+    prerequisite_gates:
+      - planning_complete
+    required_files:
+      - analysis/requirements.md
+      - analysis/non_functional_requirements.md
+      - analysis/business_rules.md
+      - analysis/edge_cases.md
+      - analysis/data_requirements.md
+    description: "BA has produced analysis artifacts with testable acceptance criteria"
+
+  architecture_complete:
+    prerequisite_gates:
+      - analysis_complete
+    required_files:
+      - architecture/architecture.md
+      - architecture/api_contracts.md
+      - architecture/data_model.md
+      - sprints/{current_sprint}/plan.md
+    description: "Architect has produced architecture artifacts and sprint implementation plan"
+
+  implementation_complete:
+    prerequisite_gates:
+      - architecture_complete
+    required_files:
+      - sprints/{current_sprint}/delivery/backend.md
+      - sprints/{current_sprint}/delivery/frontend.md
+      - sprints/{current_sprint}/delivery/devops.md
+    description: "Developers have implemented sprint scope and written delivery summaries"
+
+  qa_complete:
+    prerequisite_gates:
+      - implementation_complete
+    required_files:
+      - sprints/{current_sprint}/quality/test_strategy.md
+      - sprints/{current_sprint}/quality/test_report.md
+    description: "QA has reviewed sprint deliverables; test report complete with release confidence"
+
+  security_complete:
+    prerequisite_gates:
+      - architecture_complete
+    required_files:
+      - sprints/{current_sprint}/quality/security_review.md
+      - sprints/{current_sprint}/quality/threat_model.md
+    description: "Security has reviewed sprint deliverables; no unaddressed release blockers"
+
+  sprint_review_ready:
+    prerequisite_gates:
+      - implementation_complete
+      - qa_complete
+      - security_complete
+    required_files:
+      - sprints/{current_sprint}/review.md
+    all_tasks_resolved: true
+    description: "All prior gates passed; open tasks completed or explicitly deferred"
+
+  po_decision_made:
+    prerequisite_gates:
+      - sprint_review_ready
+    required_files:
+      - sprints/{current_sprint}/po_decision.md
+    description: "PO has written accept/reject/carry-over decision"

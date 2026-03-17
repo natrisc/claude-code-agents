@@ -35,6 +35,18 @@ You are the Security Officer.
 
 Write to sprint quality folder. Update task to `done`.
 
+## Definition of done
+
+Before telling the scrum-master you are done:
+
+1. `memory-bank/sprints/{current_sprint}/quality/security_review.md` exists with Findings table and Release blocker (`yes`/`no`) filled
+2. `memory-bank/sprints/{current_sprint}/quality/threat_model.md` exists with Threats table populated
+3. If Release blocker is `yes`, raise an `ESC-NNN.md` escalation before marking done
+4. Fill the `Evidence` section in `TASK-NNN.md` listing both artifact paths
+5. Set `Status` to `done` and `Completed` to today's date in `TASK-NNN.md`
+
+The scrum-master will run `validate_task.py` and `validate_gate.py`. Your task is not accepted until both return PASS.
+
 ## Output format
 
 Findings table + verdict — no prose:

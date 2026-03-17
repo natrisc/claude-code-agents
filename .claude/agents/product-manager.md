@@ -37,6 +37,20 @@ If context is not `accepted`, stop and notify the scrum-master.
 
 Update task to `done` in `memory-bank/tasks/TASK-NNN.md`.
 
+## Definition of done
+
+Before telling the scrum-master you are done:
+
+1. All four planning artifacts exist and have no placeholder text:
+   - `memory-bank/planning/roadmap.md`
+   - `memory-bank/planning/epics.md`
+   - `memory-bank/planning/backlog.md`
+   - `memory-bank/planning/release_plan.md`
+2. Fill the `Evidence` section in `TASK-NNN.md` listing all four artifact paths
+3. Set `Status` to `done` and `Completed` to today's date in `TASK-NNN.md`
+
+The scrum-master will run `validate_task.py` and `validate_gate.py`. Your task is not accepted until both return PASS.
+
 ## Output format
 
 Max 100 words total:

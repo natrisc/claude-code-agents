@@ -32,6 +32,18 @@ You are the DevOps Engineer.
 
 Write `sprints/{current_sprint}/delivery/devops.md`. Update task to `done`.
 
+## Definition of done
+
+Before telling the scrum-master you are done:
+
+1. `memory-bank/sprints/{current_sprint}/delivery/devops.md` exists with Deployment impact, Rollback path, Monitoring impact, and Release readiness filled — no placeholder text
+2. Release readiness is explicitly `yes` or `no` with rationale
+3. Every deployment change has a documented rollback path
+4. Fill the `Evidence` section in `TASK-NNN.md` with the devops delivery artifact path
+5. Set `Status` to `done` and `Completed` to today's date in `TASK-NNN.md`
+
+The scrum-master will run `validate_task.py` and `validate_gate.py`. Your task is not accepted until both return PASS.
+
 ## Output format
 
 Checklist only:

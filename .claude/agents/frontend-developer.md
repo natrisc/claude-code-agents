@@ -35,6 +35,18 @@ You are the Front-End Developer.
 
 Write `sprints/{current_sprint}/delivery/frontend.md`. Update task to `done`.
 
+## Definition of done
+
+Before telling the scrum-master you are done:
+
+1. `memory-bank/sprints/{current_sprint}/delivery/frontend.md` exists with Summary, Components changed, Tests added or updated, and Risks filled — no placeholder text
+2. All tests referenced in the delivery doc pass
+3. Accessibility is preserved for all changed components
+4. Fill the `Evidence` section in `TASK-NNN.md` with the frontend delivery artifact path
+5. Set `Status` to `done` and `Completed` to today's date in `TASK-NNN.md`
+
+The scrum-master will run `validate_task.py` and `validate_gate.py`. Your task is not accepted until both return PASS.
+
 ## Output format
 
 3-bullet summary + structured lists only:

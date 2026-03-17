@@ -12,26 +12,93 @@ npm install -g @anthropic-ai/claude-code
 git clone https://github.com/natrisc/claude-code-agents
 ```
 
-Or copy the `.claude/` and `memory-bank/` folders into an existing project.
+Or copy the `.claude/`, `memory-bank/`, and `workflow/` folders into an existing project.
 
-## 3. Make hooks executable
+## 3. Install Python dependencies
+
+The enforcement layer requires PyYAML:
+
+```bash
+pip install pyyaml
+```
+
+## 4. Make hooks and scripts executable
 
 ```bash
 chmod +x .claude/hooks/*.sh
+chmod +x workflow/scripts/*.py
 ```
 
-## 4. Start Claude
+## 5. Verify the enforcement layer
+
+```bash
+python workflow/scripts/validate_gate.py --all
+```
+
+All gates will show `[FAIL]` except `context_ready`, which will show `[PASS]` once you complete step 7 below. This is expected.
+
+## 6. Start Claude
 
 ```bash
 claude
 ```
 
-## 5. Fill in the project context
+## 7. Fill in the project context
 
 Open `memory-bank/context/project_context.md` and complete the template.
 Set its status to `accepted` in `memory-bank/state/artifact_registry.yaml`.
-This opens the first gate.
 
-## 6. Start your first sprint
+Run the validator to confirm the first gate opens:
 
-Ask Claude to initialise sprint-01. The Scrum Master will copy the sprint template, set the current sprint in `workflow_state.yaml`, and begin routing work.
+```bash
+python workflow/scripts/validate_gate.py context_ready
+# → [PASS] context_ready
+```
+
+## 8. Generate the initial dashboard
+
+```bash
+python workflow/scripts/regenerate_dashboard.py
+```
+
+## 9. Start your first sprint
+
+Ask Claude to initialise sprint-01. The Scrum Master will copy the sprint template, set the current sprint in `workflow_state.yaml`, create the first task, and begin routing work.
+
+---
+
+## Repository structure
+
+```
+.claude/
+  agents/         ← role agent definitions
+  hooks/          ← pre/post tool hooks
+  rules/          ← stack-specific coding rules
+  skills/         ← reusable workflow skills
+memory-bank/
+  context/        ← project context (PO owned)
+  planning/       ← roadmap, epics, backlog (PM owned)
+  analysis/       ← requirements, business rules (BA owned)
+  architecture/   ← architecture, API contracts (Architect owned)
+  sprints/        ← one folder per sprint
+  state/          ← workflow_state.yaml, artifact_registry.yaml, dashboard.md
+  tasks/          ← TASK-NNN.md files
+  escalations/    ← ESC-NNN.md files
+  logs/           ← append-only events.log
+workflow/
+  contracts/      ← gates.yaml (gate artifact contracts)
+  scripts/        ← validate_gate.py, validate_task.py, regenerate_dashboard.py
+docs/             ← documentation
+```
+
+## Key files
+
+| File | Purpose |
+| --- | --- |
+| `memory-bank/state/workflow_state.yaml` | Single source of truth for gate flags, roles, and tasks |
+| `memory-bank/state/artifact_registry.yaml` | Artifact ownership and acceptance status |
+| `workflow/contracts/gates.yaml` | Required files and prerequisites per gate |
+| `workflow/scripts/validate_gate.py` | Gate validator — run before opening any gate |
+| `workflow/scripts/validate_task.py` | Task validator — run before accepting any task |
+| `workflow/scripts/regenerate_dashboard.py` | Dashboard generator — run after every state change |
+| `memory-bank/state/sprint_playbook.md` | Sprint init and close procedures |

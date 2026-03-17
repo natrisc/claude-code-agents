@@ -33,6 +33,22 @@ You are the QA Tester.
 
 Write strategy and report to sprint quality folder. Update task to `done`.
 
+## Definition of done
+
+Before telling the scrum-master you are done:
+
+1. `memory-bank/sprints/{current_sprint}/quality/test_strategy.md` exists with Test scenarios table populated
+2. `memory-bank/sprints/{current_sprint}/quality/test_report.md` exists with:
+   - Pass/fail result per acceptance criterion
+   - Defects found (or explicit "none")
+   - Regression risks reviewed
+   - Release confidence: `high`, `medium`, or `low` — explicit, not blank
+3. If release confidence is `low`, raise an escalation before marking done
+4. Fill the `Evidence` section in `TASK-NNN.md` listing both artifact paths
+5. Set `Status` to `done` and `Completed` to today's date in `TASK-NNN.md`
+
+The scrum-master will run `validate_task.py` and `validate_gate.py`. Your task is not accepted until both return PASS.
+
 ## Output format
 
 No prose — structured output only:

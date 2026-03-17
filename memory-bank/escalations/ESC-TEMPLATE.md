@@ -2,6 +2,7 @@
 
 **Status**: open | resolved
 **Raised by**: <!-- role -->
+**Sprint**: <!-- sprint ID, e.g. sprint-01 -->
 **Context version**: <!-- e.g. 1.5 -->
 **Created**: <!-- YYYY-MM-DD -->
 **Resolved**: <!-- YYYY-MM-DD or blank -->
@@ -16,6 +17,11 @@
 
 <!-- Which artifacts cannot be completed until this is resolved -->
 <!-- Which downstream roles are blocked -->
+
+## Blocked tasks
+
+<!-- TASK-NNN IDs paused because of this escalation -->
+- <!-- e.g. TASK-003 -->
 
 ## Required action
 

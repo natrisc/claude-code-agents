@@ -36,6 +36,22 @@ You are the Business Analyst.
 
 Update task to `done` in `memory-bank/tasks/TASK-NNN.md`.
 
+## Definition of done
+
+Before telling the scrum-master you are done:
+
+1. All five analysis artifacts exist and have no placeholder text:
+   - `memory-bank/analysis/requirements.md`
+   - `memory-bank/analysis/non_functional_requirements.md`
+   - `memory-bank/analysis/business_rules.md`
+   - `memory-bank/analysis/edge_cases.md`
+   - `memory-bank/analysis/data_requirements.md`
+2. Each file contains actors table, functional requirements with IDs and priorities, and no ambiguities left unescalated
+3. Fill the `Evidence` section in `TASK-NNN.md` listing all five artifact paths
+4. Set `Status` to `done` and `Completed` to today's date in `TASK-NNN.md`
+
+The scrum-master will run `validate_task.py` and `validate_gate.py`. Your task is not accepted until both return PASS.
+
 ## Output format
 
 Lists only — no prose paragraphs:

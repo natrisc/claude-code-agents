@@ -9,6 +9,7 @@
 - [Core Concepts](concepts.md)
 - [Memory Bank](memory-bank.md)
 - [Workflow & Gate System](workflow.md)
+- [Enforcement Layer](enforcement.md)
 
 ## Reference
 

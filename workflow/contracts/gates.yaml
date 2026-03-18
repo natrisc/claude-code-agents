@@ -12,7 +12,7 @@
 # Gate progression order:
 #   context_ready → planning_complete → analysis_complete →
 #   architecture_complete → implementation_complete →
-#   qa_complete + security_complete → sprint_review_ready → po_decision_made
+#   qa_complete + security_complete + devops_complete → sprint_review_ready → po_decision_made
 
 gates:
 
@@ -57,8 +57,7 @@ gates:
     required_files:
       - sprints/{current_sprint}/delivery/backend.md
       - sprints/{current_sprint}/delivery/frontend.md
-      - sprints/{current_sprint}/delivery/devops.md
-    description: "Developers have implemented sprint scope and written delivery summaries"
+    description: "Backend and frontend developers have implemented sprint scope and written delivery summaries"
 
   qa_complete:
     prerequisite_gates:
@@ -70,17 +69,25 @@ gates:
 
   security_complete:
     prerequisite_gates:
-      - architecture_complete
+      - implementation_complete
     required_files:
       - sprints/{current_sprint}/quality/security_review.md
       - sprints/{current_sprint}/quality/threat_model.md
     description: "Security has reviewed sprint deliverables; no unaddressed release blockers"
+
+  devops_complete:
+    prerequisite_gates:
+      - implementation_complete
+    required_files:
+      - sprints/{current_sprint}/delivery/devops.md
+    description: "DevOps has implemented CI/CD, deployment, and operational configuration for the sprint"
 
   sprint_review_ready:
     prerequisite_gates:
       - implementation_complete
       - qa_complete
       - security_complete
+      - devops_complete
     required_files:
       - sprints/{current_sprint}/review.md
     all_tasks_resolved: true

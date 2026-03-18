@@ -23,7 +23,7 @@ CONTEXT_READY
   → PO_DECISION_MADE
 ```
 
-`QA_COMPLETE`, `SECURITY_COMPLETE`, and `DEVOPS_COMPLETE` are independent and run in parallel once `IMPLEMENTATION_COMPLETE` is open. `SECURITY_COMPLETE` can start as soon as `ARCHITECTURE_COMPLETE` is open.
+`QA_COMPLETE`, `SECURITY_COMPLETE`, and `DEVOPS_COMPLETE` all require `IMPLEMENTATION_COMPLETE`. Within Phase 6, DevOps implements first, then QA and Security execute their assessments — Security requires `devops.md` to review infrastructure changes.
 
 ---
 
@@ -32,10 +32,10 @@ CONTEXT_READY
 1. SM initialises `sprints/sprint-NNN/` from template, sets `current_sprint` in `workflow_state.yaml`
 2. PO confirms context is current → SM runs validator → `context_ready: true`
 3. SM writes `sprints/sprint-NNN/intent.md` → SM runs validator → `planning_complete: true`
-4. BA writes/updates analysis artifacts → SM runs validator → `analysis_complete: true`
-5. Architect writes/updates architecture artifacts and `plan.md` → SM runs validator → `architecture_complete: true`
-6. FE + BE implement sprint scope (in parallel) → SM runs validator → `implementation_complete: true`
-7. QA, Security, and DevOps work in parallel → SM runs validators → `qa_complete: true`, `security_complete: true`, `devops_complete: true`
+4. BA runs `create-analysis` (first sprint) then `analyse-sprint` → SM runs validator → `analysis_complete: true`
+5. Architect runs `create-architecture` then `plan-sprint` sequentially → SM runs validator → `architecture_complete: true`
+6. FE + BE plan and implement in parallel → SM runs validator → `implementation_complete: true`
+7. QA + Security + DevOps create assessments/plan in parallel → DevOps implements → QA + Security execute assessments → SM runs validators → `qa_complete: true`, `security_complete: true`, `devops_complete: true`
 8. SM opens sprint review → `sprint_review_ready: true`
 9. PO writes `sprints/sprint-NNN/po_decision.md` → `po_decision_made: true`
 10. SM closes sprint: updates `product_progress.yaml`, moves carry-overs to backlog, regenerates dashboard

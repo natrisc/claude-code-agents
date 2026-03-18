@@ -43,7 +43,11 @@ Gate to open after: `planning_complete`
 ### Phase 3 — Analysis
 **Gate required before**: `planning_complete`
 
-Route to **business-analyst**: task type `create-analysis`
+Route to **business-analyst** sequentially:
+1. task type `create-analysis` — first sprint only; skip if analysis artifacts already exist and are `accepted`
+2. task type `analyse-sprint` — every sprint; refines analysis for the current sprint scope against `intent.md`
+
+Wait for each task to pass validation before routing the next.
 
 Gate to open after: `analysis_complete`
 
@@ -52,9 +56,9 @@ Gate to open after: `analysis_complete`
 ### Phase 4 — Architecture and sprint planning
 **Gate required before**: `analysis_complete`
 
-Route to **system-architect**:
-1. task type `create-architecture` — produces architecture artifacts
-2. task type `plan-sprint` — produces `sprints/{current_sprint}/plan.md`
+Route to **system-architect** sequentially:
+1. task type `create-architecture` — wait for this task to pass validation before routing the next
+2. task type `plan-sprint` — route only after `create-architecture` is accepted
 
 Gate to open after: `architecture_complete`
 
@@ -67,7 +71,8 @@ Route in parallel (work is independent):
 - **backend-developer**: task type `plan-backend`, then `implement-backend`
 - **frontend-developer**: task type `plan-frontend`, then `implement-frontend`
 
-Wait for both to complete before opening the gate.
+Within each agent, wait for the plan task to pass validation before routing the implement task.
+Wait for both implement tasks to complete before opening the gate.
 
 Gate to open after: `implementation_complete`
 
@@ -76,12 +81,25 @@ Gate to open after: `implementation_complete`
 ### Phase 6 — Quality and operations
 **Gate required before**: `implementation_complete`
 
-Route in parallel (work is independent):
-- **qa-tester**: task type `create-assessment`, then `execute-assessment`
-- **security-officer**: task type `create-assessment`, then `execute-assessment`
-- **devops-engineer**: task type `plan-devops`, then `implement-devops`
+Route in three sequential sub-phases:
 
-Wait for all three to complete before opening the gate.
+**6a — Assessment creation (parallel)**
+- **qa-tester**: task type `create-assessment`
+- **security-officer**: task type `create-assessment`
+- **devops-engineer**: task type `plan-devops`
+
+Wait for all three to pass validation before proceeding.
+
+**6b — DevOps implementation**
+- **devops-engineer**: task type `implement-devops`
+
+Wait for `implement-devops` to pass validation before proceeding. This produces `devops.md`, which security requires.
+
+**6c — Assessment execution (parallel)**
+- **qa-tester**: task type `execute-assessment`
+- **security-officer**: task type `execute-assessment`
+
+Wait for both to pass validation before opening the gate.
 
 Gate to open after: `qa_complete`, `security_complete`, `devops_complete`
 

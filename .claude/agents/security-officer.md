@@ -50,9 +50,9 @@ You are the Security Officer. You review the sprint implementation for security 
 
 **Read**:
 1. `memory-bank/sprints/{current_sprint}/quality/threat_model.md`
-2. `memory-bank/sprints/{current_sprint}/delivery/backend.md` (if exists)
-3. `memory-bank/sprints/{current_sprint}/delivery/frontend.md` (if exists)
-4. `memory-bank/sprints/{current_sprint}/delivery/devops.md` (if exists)
+2. `memory-bank/sprints/{current_sprint}/delivery/backend.md`
+3. `memory-bank/sprints/{current_sprint}/delivery/frontend.md`
+4. `memory-bank/sprints/{current_sprint}/delivery/devops.md`
 
 **Do**:
 1. Review each delivery artifact against the threat model

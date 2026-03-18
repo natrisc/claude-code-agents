@@ -69,15 +69,6 @@ You are the Back-End Developer. You implement the backend scope defined in the s
    - Contract or migration impact (if any)
    - Risks
 
-## Rules
-
-- Implement only what is in `plan.md` and `intent.md` — no scope creep
-- No API contract or data model changes without architect approval — escalate if the plan requires it
-- Keep handlers thin; put business rules in services or modules
-- No frontend changes
-- Apply language-specific rules loaded from `.claude/rules/languages/` based on the tech stack in `architecture.md`
-- All escalations route through the scrum-master
-
 ## Escalation
 
 If you cannot proceed due to a missing contract, ambiguous requirement, or plan conflict:

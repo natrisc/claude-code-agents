@@ -22,100 +22,19 @@ Never open a gate or mark a task done based on an agent's self-report alone. All
 
 ## Delivery workflow
 
-### Phase 1 — Project activation
-**Gate required before**: nothing (first run only)
+| Phase | Gate required | Route to | Task type(s) | Sequencing notes | Gate to open |
+| --- | --- | --- | --- | --- | --- |
+| 1. Project activation | none (first run only) | product-owner | `activate-project` | — | `context_ready` |
+| 2. Product breakdown | `context_ready` | product-manager | `create-breakdown` | — | `planning_complete` |
+| 3. Analysis | `planning_complete` | business-analyst | `create-analysis` → `analyse-sprint` | sequential; skip `create-analysis` if artifacts already exist and are `accepted` | `analysis_complete` |
+| 4. Architecture | `analysis_complete` | system-architect | `create-architecture` → `plan-sprint` | sequential; validate after each task | `architecture_complete` |
+| 5. Implementation | `architecture_complete` | backend-developer, frontend-developer | `plan-backend`/`plan-frontend` → `implement-backend`/`implement-frontend` | parallel pairs; validate plan before routing implement; wait for both implement tasks before gate | `implementation_complete` |
+| 6a. Assessment creation | `implementation_complete` | qa-tester, security-officer, devops-engineer | `create-assessment`, `create-assessment`, `plan-devops` | parallel; wait for all three before 6b | — |
+| 6b. DevOps implementation | 6a complete | devops-engineer | `implement-devops` | produces `devops.md` required by security; wait before 6c | — |
+| 6c. Assessment execution | 6b complete | qa-tester, security-officer | `execute-assessment`, `execute-assessment` | parallel; wait for both | `qa_complete`, `security_complete`, `devops_complete` |
+| 7. Sprint review | `qa_complete`, `security_complete`, `devops_complete` | product-owner | `approve-sprint-review` | — | `po_decision_made` |
 
-Route to **product-owner**: task type `activate-project`
-
-Gate to open after: `context_ready`
-
----
-
-### Phase 2 — Product breakdown
-**Gate required before**: `context_ready`
-
-Route to **product-manager**: task type `create-breakdown`
-
-Gate to open after: `planning_complete`
-
----
-
-### Phase 3 — Analysis
-**Gate required before**: `planning_complete`
-
-Route to **business-analyst** sequentially:
-1. task type `create-analysis` — first sprint only; skip if analysis artifacts already exist and are `accepted`
-2. task type `analyse-sprint` — every sprint; refines analysis for the current sprint scope against `intent.md`
-
-Wait for each task to pass validation before routing the next.
-
-Gate to open after: `analysis_complete`
-
----
-
-### Phase 4 — Architecture and sprint planning
-**Gate required before**: `analysis_complete`
-
-Route to **system-architect** sequentially:
-1. task type `create-architecture` — wait for this task to pass validation before routing the next
-2. task type `plan-sprint` — route only after `create-architecture` is accepted
-
-Gate to open after: `architecture_complete`
-
----
-
-### Phase 5 — Implementation
-**Gate required before**: `architecture_complete`
-
-Route in parallel (work is independent):
-- **backend-developer**: task type `plan-backend`, then `implement-backend`
-- **frontend-developer**: task type `plan-frontend`, then `implement-frontend`
-
-Within each agent, wait for the plan task to pass validation before routing the implement task.
-Wait for both implement tasks to complete before opening the gate.
-
-Gate to open after: `implementation_complete`
-
----
-
-### Phase 6 — Quality and operations
-**Gate required before**: `implementation_complete`
-
-Route in three sequential sub-phases:
-
-**6a — Assessment creation (parallel)**
-- **qa-tester**: task type `create-assessment`
-- **security-officer**: task type `create-assessment`
-- **devops-engineer**: task type `plan-devops`
-
-Wait for all three to pass validation before proceeding.
-
-**6b — DevOps implementation**
-- **devops-engineer**: task type `implement-devops`
-
-Wait for `implement-devops` to pass validation before proceeding. This produces `devops.md`, which security requires.
-
-**6c — Assessment execution (parallel)**
-- **qa-tester**: task type `execute-assessment`
-- **security-officer**: task type `execute-assessment`
-
-Wait for both to pass validation before opening the gate.
-
-Gate to open after: `qa_complete`, `security_complete`, `devops_complete`
-
----
-
-### Phase 7 — Sprint review
-**Gate required before**: `qa_complete`, `security_complete`, `devops_complete`
-
-Route to **product-owner**: task type `approve-sprint-review`
-
-Gate to open after: `po_decision_made`
-
-After PO decision:
-- If `accept` or `partially accept`: close the sprint (see Sprint close below)
-- If `reject`: create remediation tasks and re-route to the relevant agents
-- If context change flagged: route to **product-owner** with task type `evaluate-change-request`, then trigger the change management workflow
+After PO decision: `accept`/`partially accept` → close sprint; `reject` → create remediation tasks and re-route; context change flagged → route to **product-owner** with task type `evaluate-change-request`, then trigger the change management workflow.
 
 ---
 

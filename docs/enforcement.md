@@ -75,10 +75,11 @@ python workflow/scripts/regenerate_dashboard.py
 | `planning_complete` | `context_ready` | `sprints/{current_sprint}/intent.md` |
 | `analysis_complete` | `planning_complete` | all `analysis/*.md` |
 | `architecture_complete` | `analysis_complete` | all `architecture/*.md`, `sprints/{current_sprint}/plan.md` |
-| `implementation_complete` | `architecture_complete` | `sprints/{current_sprint}/delivery/backend.md`, `frontend.md`, `devops.md` |
+| `implementation_complete` | `architecture_complete` | `sprints/{current_sprint}/delivery/backend.md`, `frontend.md` |
 | `qa_complete` | `implementation_complete` | `sprints/{current_sprint}/quality/test_strategy.md`, `test_report.md` |
 | `security_complete` | `architecture_complete` | `sprints/{current_sprint}/quality/security_review.md`, `threat_model.md` |
-| `sprint_review_ready` | `implementation_complete` + `qa_complete` + `security_complete` | `sprints/{current_sprint}/review.md` |
+| `devops_complete` | `implementation_complete` | `sprints/{current_sprint}/delivery/devops.md` |
+| `sprint_review_ready` | `implementation_complete` + `qa_complete` + `security_complete` + `devops_complete` | `sprints/{current_sprint}/review.md` |
 | `po_decision_made` | `sprint_review_ready` | `sprints/{current_sprint}/po_decision.md` |
 
 The full contract with all fields is in `workflow/contracts/gates.yaml`.
@@ -140,7 +141,7 @@ If any agent cannot proceed due to missing, ambiguous, or contradictory requirem
 4. Set task status to `blocked` in `TASK-NNN.md`
 5. Add escalation to `blockers` in `workflow_state.yaml`
 6. Run `python workflow/scripts/regenerate_dashboard.py`
-7. Route to product-owner
+7. Route to scrum-master for resolution
 
 The only legal actions when blocked are: create escalation, set blocked state, stop routing downstream work. No agent may guess, invent requirements, or work around an escalation.
 

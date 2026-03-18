@@ -64,10 +64,8 @@ git checkout -b refactor/publisher-abstraction
 
 ```text
 Create branch
-→ QPLAN
-→ QCODE
-→ QCHECK
-→ QCHECKT
+→ plan
+→ implement
 → review diff
 → commit
 → push
@@ -135,12 +133,10 @@ Recommended required checks: tests, lint, typecheck, any security or build check
 For release-sensitive changes:
 
 1. complete implementation
-2. run `QCHECK`
-3. run `QCHECKT`
-4. run release-readiness review
-5. confirm rollback notes
-6. merge via PR
-7. deploy through normal CI/CD pipeline
+2. review diff and test output
+3. confirm rollback notes
+4. merge via PR
+5. deploy through normal CI/CD pipeline
 
 ## Recommended Ownership Model
 

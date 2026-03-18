@@ -3,15 +3,15 @@
 | Role | Owns | Reads |
 | --- | --- | --- |
 | Product Owner | `context/*`, `sprints/{sprint}/po_decision.md` | everything |
-| Product Manager | `planning/roadmap.md`, `epics.md`, `backlog.md` | context |
+| Product Manager | `planning/roadmap.md`, `epics.md`, `backlog.md`, `release_plan.md` | context |
 | Scrum Master | `sprints/{sprint}/intent.md`, `state/*`, `tasks/*` | everything |
 | Business Analyst | `analysis/*` | context, planning |
-| System Architect | `architecture/*` | context, analysis |
-| Frontend Developer | `sprints/{sprint}/delivery/frontend.md` | context, analysis, architecture |
-| Backend Developer | `sprints/{sprint}/delivery/backend.md` | context, analysis, architecture |
-| DevOps Engineer | `sprints/{sprint}/delivery/devops.md` | architecture, delivery |
-| QA Tester | `sprints/{sprint}/quality/test_*.md` | analysis, delivery |
-| Security Officer | `sprints/{sprint}/quality/security_review.md` | architecture, analysis, quality |
+| System Architect | `architecture/*`, `sprints/{sprint}/plan.md` | context, analysis |
+| Frontend Developer | `sprints/{sprint}/delivery/frontend_plan.md`, `frontend.md` | context, analysis, architecture |
+| Backend Developer | `sprints/{sprint}/delivery/backend_plan.md`, `backend.md` | context, analysis, architecture |
+| DevOps Engineer | `sprints/{sprint}/delivery/devops_plan.md`, `devops.md` | architecture, delivery |
+| QA Tester | `sprints/{sprint}/quality/test_strategy.md`, `test_report.md` | analysis, delivery |
+| Security Officer | `sprints/{sprint}/quality/threat_model.md`, `security_review.md` | architecture, analysis, delivery |
 
 Role boundaries are strict. No agent edits artifacts owned by another role.
 

@@ -18,12 +18,12 @@ CONTEXT_READY
   → ANALYSIS_COMPLETE
   → ARCHITECTURE_COMPLETE
   → IMPLEMENTATION_COMPLETE
-  → QA_COMPLETE + SECURITY_COMPLETE  (both required; run in parallel)
+  → QA_COMPLETE + SECURITY_COMPLETE + DEVOPS_COMPLETE  (all three required; run in parallel)
   → SPRINT_REVIEW_READY
   → PO_DECISION_MADE
 ```
 
-`QA_COMPLETE` and `SECURITY_COMPLETE` are independent and can proceed in parallel once `IMPLEMENTATION_COMPLETE` is open (`SECURITY_COMPLETE` can start as soon as `ARCHITECTURE_COMPLETE` is open).
+`QA_COMPLETE`, `SECURITY_COMPLETE`, and `DEVOPS_COMPLETE` are independent and run in parallel once `IMPLEMENTATION_COMPLETE` is open. `SECURITY_COMPLETE` can start as soon as `ARCHITECTURE_COMPLETE` is open.
 
 ---
 
@@ -34,8 +34,8 @@ CONTEXT_READY
 3. SM writes `sprints/sprint-NNN/intent.md` → SM runs validator → `planning_complete: true`
 4. BA writes/updates analysis artifacts → SM runs validator → `analysis_complete: true`
 5. Architect writes/updates architecture artifacts and `plan.md` → SM runs validator → `architecture_complete: true`
-6. FE + BE implement sprint scope → SM runs validator → `implementation_complete: true`
-7. QA and Security write sprint quality artifacts → SM runs validators → `qa_complete: true`, `security_complete: true`
+6. FE + BE implement sprint scope (in parallel) → SM runs validator → `implementation_complete: true`
+7. QA, Security, and DevOps work in parallel → SM runs validators → `qa_complete: true`, `security_complete: true`, `devops_complete: true`
 8. SM opens sprint review → `sprint_review_ready: true`
 9. PO writes `sprints/sprint-NNN/po_decision.md` → `po_decision_made: true`
 10. SM closes sprint: updates `product_progress.yaml`, moves carry-overs to backlog, regenerates dashboard
@@ -71,7 +71,7 @@ If any agent cannot proceed due to ambiguity or missing information:
 4. Set task status to `blocked` in `TASK-NNN.md`
 5. Add escalation to `blockers` in `workflow_state.yaml`
 6. Regenerate dashboard
-7. Route to the Product Owner for resolution
+7. Route to the Scrum Master for resolution
 
 No agent may guess, invent requirements, or work around an escalation. The only legal response to a blocker is to create an escalation and stop.
 
@@ -79,18 +79,9 @@ No agent may guess, invent requirements, or work around an escalation. The only 
 
 ## Skills
 
-Eleven reusable workflow skills are included:
+Two workflow skills are available for use in the main session:
 
 | Skill | Purpose |
 | --- | --- |
-| `backlog-refinement` | convert rough ideas into Scrum-ready items |
-| `story-writing` | produce user stories with testable acceptance criteria |
-| `sprint-planning` | turn backlog items into a sprint-ready plan |
-| `api-design` | design or review API contracts |
-| `architect-review` | review changes for architectural fit |
-| `back-end-implementation` | implement backend work with service boundaries and tests |
-| `front-end-implementation` | implement frontend work with component boundaries and tests |
-| `qa-regression` | review changes for regression risk and missing coverage |
-| `security-review` | review for auth, validation, secret, and exposure risks |
-| `release-readiness` | evaluate whether a change is safe to release |
 | `incident-triage` | triage production issues across app, infra, and dependencies |
+| `escalation-review` | review open escalations, classify them, and route or surface to user |

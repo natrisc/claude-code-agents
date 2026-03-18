@@ -14,8 +14,9 @@ memory-bank/
     SPRINT-TEMPLATE/  ← copied to start each new sprint
     sprint-01/
       intent.md
-      delivery/     ← frontend.md, backend.md, devops.md
-      quality/      ← test_strategy.md, test_report.md, security_review.md
+      plan.md
+      delivery/     ← backend_plan.md, backend.md, frontend_plan.md, frontend.md, devops_plan.md, devops.md
+      quality/      ← test_strategy.md, test_report.md, threat_model.md, security_review.md
       review.md
       po_decision.md
   state/            ← workflow_state.yaml, artifact_registry.yaml,

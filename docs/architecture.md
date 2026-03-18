@@ -22,9 +22,12 @@ Sprint outputs never overwrite each other. Every sprint has its own folder with 
 ├── memory-bank/               ← shared agent memory
 └── .claude/
     ├── settings.json          ← permissions and guardrails
-    ├── agents/                ← 10 specialist agent definitions
-    ├── skills/                ← 11 reusable workflow skills
-    ├── rules/                 ← stack-specific engineering standards
+    ├── agents/                ← 9 specialist agent definitions
+    ├── skills/                ← 2 reusable workflow skills
+    ├── rules/
+    │   ├── shared/            ← engineering and testing rules (all coding agents)
+    │   ├── roles/             ← role-specific rules (backend, frontend, devops, security, product)
+    │   └── languages/         ← language-specific rules (python, rust)
     └── hooks/                 ← automated safety checks
 ```
 

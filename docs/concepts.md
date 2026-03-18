@@ -28,13 +28,10 @@ The product evolves across multiple sprints against one active product baseline 
 
 ## Supported Stacks
 
-Engineering rules in `.claude/rules/` cover:
+Engineering rules in `.claude/rules/` are organised into three tiers:
 
-- TypeScript / Node
-- React
-- Python
-- Rust
-- REST APIs
-- cloud-native and containerised systems
+- `shared/` — generic engineering and testing rules applied by all coding agents
+- `roles/` — role-specific rules for backend, frontend, devops, security, and product agents
+- `languages/` — language-specific rules for Python and Rust, loaded conditionally based on the technology stack defined in `architecture.md`
 
 The system is stack-agnostic — rules are additive, not prescriptive.

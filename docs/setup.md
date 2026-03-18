@@ -43,12 +43,11 @@ All gates will show `[FAIL]` except `context_ready`, which will show `[PASS]` on
 claude
 ```
 
-## 7. Fill in the project context
+## 7. Activate the project
 
-Open `memory-bank/context/project_context.md` and complete the template.
-Set its status to `accepted` in `memory-bank/state/artifact_registry.yaml`.
+Ask Claude to start your project. The Scrum Master will route an `activate-project` task to the Product Owner, who will create `memory-bank/context/project_context.md` from your input.
 
-Run the validator to confirm the first gate opens:
+Once the PO completes the task, set its status to `accepted` in `memory-bank/state/artifact_registry.yaml` and run the validator to confirm the first gate opens:
 
 ```bash
 python workflow/scripts/validate_gate.py context_ready
@@ -73,7 +72,10 @@ Ask Claude to initialise sprint-01. The Scrum Master will copy the sprint templa
 .claude/
   agents/         ← role agent definitions
   hooks/          ← pre/post tool hooks
-  rules/          ← stack-specific coding rules
+  rules/
+    shared/       ← engineering and testing rules
+    roles/        ← role-specific rules
+    languages/    ← language-specific rules
   skills/         ← reusable workflow skills
 memory-bank/
   context/        ← project context (PO owned)

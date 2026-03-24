@@ -7,7 +7,8 @@
 | Scrum Master | `sprints/{sprint}/intent.md`, `state/*`, `tasks/*` | everything |
 | Business Analyst | `analysis/*` | context, planning |
 | System Architect | `architecture/*`, `sprints/{sprint}/plan.md` | context, analysis |
-| Frontend Developer | `sprints/{sprint}/delivery/frontend_plan.md`, `frontend.md` | context, analysis, architecture |
+| UI/UX Designer | `sprints/{sprint}/delivery/ux_plan.md` | context, analysis, architecture, frontend_plan.md |
+| Frontend Developer | `sprints/{sprint}/delivery/frontend_plan.md`, `frontend.md` | context, analysis, architecture, ux_plan.md |
 | Backend Developer | `sprints/{sprint}/delivery/backend_plan.md`, `backend.md` | context, analysis, architecture |
 | DevOps Engineer | `sprints/{sprint}/delivery/devops_plan.md`, `devops.md` | architecture, delivery |
 | QA Tester | `sprints/{sprint}/quality/test_strategy.md`, `test_report.md` | analysis, delivery |
@@ -21,7 +22,8 @@ Role boundaries are strict. No agent edits artifacts owned by another role.
 - **Product Manager** — priority, trade-offs, roadmap fit
 - **Business Analyst** — process clarification, domain rules, dependencies
 - **System Architect** — cross-cutting design, new modules, API or event contract changes, architectural trade-offs
-- **Front-End Developer** — UI, UX, React, accessibility, client logic
+- **UI/UX Designer** — design direction, component specs, design tokens, accessibility guidelines, web-design-guidelines audit (delegated to by Frontend Dev; does not write code)
+- **Front-End Developer** — React implementation, client logic; delegates design decisions to UI/UX Designer
 - **Back-End Developer** — API, services, Python, Rust, persistence, integrations
 - **QA Tester** — regression, edge cases, test strategy, reproducibility
 - **Security Officer** — auth, permissions, secrets, validation, exposure, dependencies

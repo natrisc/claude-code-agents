@@ -34,7 +34,7 @@ memory-bank/
     SPRINT-TEMPLATE/   ← copied by scrum-master to start each sprint
     sprint-NNN/
       intent.md            ← SM owned
-      delivery/            ← frontend.md, backend.md, devops.md (developer owned)
+      delivery/            ← frontend.md, backend.md, devops.md (developer owned); ux_plan.md (ux-designer owned, created on demand)
       quality/             ← test_strategy.md, test_report.md, security_review.md (QA + security owned)
       review.md            ← SM owned
       po_decision.md       ← PO owned
@@ -59,11 +59,12 @@ memory-bank/
 3. SM writes `sprints/sprint-NNN/intent.md` → `planning_complete: true`
 4. BA writes/updates analysis artifacts → `analysis_complete: true`
 5. Architect writes/updates architecture artifacts → `architecture_complete: true`
-6. FE + BE implement sprint scope → `implementation_complete: true`
-7. QA and Security write sprint quality artifacts → `qa_complete` and `security_complete: true`
-8. SM opens sprint review → `sprint_review_ready: true`
-9. PO writes `sprints/sprint-NNN/po_decision.md` → `po_decision_made: true`
-10. SM closes sprint: updates `product_progress.yaml`, moves carry-overs to backlog
+6. FE delegates design decisions to UX Designer → UX Designer writes `ux_plan.md` (on demand, not a required gate)
+7. FE + BE implement sprint scope → `implementation_complete: true`
+8. QA and Security write sprint quality artifacts → `qa_complete` and `security_complete: true`
+9. SM opens sprint review → `sprint_review_ready: true`
+10. PO writes `sprints/sprint-NNN/po_decision.md` → `po_decision_made: true`
+11. SM closes sprint: updates `product_progress.yaml`, moves carry-overs to backlog
 
 ### Escalation
 
@@ -95,8 +96,15 @@ Use the relevant specialist when any of the following apply:
   - new modules
   - API or event contract changes
   - architectural trade-offs
+- **UI/UX Designer** (delegated to by Frontend Dev — does not write code)
+  - design direction and aesthetic decisions
+  - component specifications (layout, states, spacing, motion)
+  - design tokens (colours, typography, spacing scale)
+  - accessibility guidelines (ARIA, keyboard nav, contrast)
+  - web-design-guidelines audit of existing UI files
 - **Front-End Developer**
-  - UI, UX, React, accessibility, client logic
+  - React implementation, client logic
+  - delegates design decisions to UI/UX Designer when a new surface or significant redesign is in scope
 - **Back-End Developer**
   - API, services, Python, Rust, persistence, integrations
 - **QA Tester**

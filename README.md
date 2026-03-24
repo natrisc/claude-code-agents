@@ -1,128 +1,193 @@
-# Claude Code Agents
+<p align="center">
+  <h1>Start without starting from scratch</h1>
+  <p>Build software and automate processes in days — not months</p>
+</p>
 
-**Turn Claude Code into a disciplined AI engineering team.**
-
-Most AI coding tools are stateless. Every session starts from scratch — no memory of past decisions, no role boundaries, no delivery discipline. The result is architectural drift, missing tests, and security blind spots that compound across sprints.
-
-This repository gives Claude Code a structured Scrum operating model: 9 specialist agents, formal gate progression, and a shared memory bank that persists across the full product lifecycle.
-
-| Feature                    | Standard AI Coding | AI Scrum Team |
-| -------------------------- | ------------------ | ------------- |
-| Code generation            | ✔                  | ✔             |
-| Architecture governance    | ✖                  | ✔             |
-| QA validation              | ✖                  | ✔             |
-| Security review            | ✖                  | ✔             |
-| Multi-sprint memory        | ✖                  | ✔             |
-| Formal change control      | ✖                  | ✔             |
-| Role boundaries            | ✖                  | ✔             |
+<p align="center">
+  <img src="https://img.shields.io/badge/status-active-brightgreen" />
+  <img src="https://img.shields.io/badge/use%20case-automation-blue" />
+  <img src="https://img.shields.io/badge/focus-internal%20tools-purple" />
+  <img src="https://img.shields.io/badge/license-MIT-lightgrey" />
+</p>
 
 ---
 
-## How It Works
+## What you’ll get in 5 minutes
 
-Nine specialist agents collaborate through canonical documents in the repository — not through conversation. No agent starts work until the previous gate is validated. No context is lost between sessions.
+- Your first automated workflow running  
+- A clear understanding of how to use AI agents  
+- A starting point for your own internal tools  
 
-```text
-Product Owner        → defines and owns project context
-Product Manager      → roadmap, epics, backlog, release plan
-Business Analyst     → requirements, business rules, edge cases
-System Architect     → architecture, API contracts, data model, sprint plan
-Backend Developer    → services, APIs, persistence, tests
-Frontend Developer   → components, client logic, accessibility, tests
-QA Tester           → test strategy, execution, release confidence
-Security Officer    → threat model, security review, release blocker
-DevOps Engineer     → CI/CD, deployment, monitoring, rollback
-```
-
-The Scrum Master orchestrates the full workflow — routing tasks, enforcing gates, and validating completion. Agents communicate through `memory-bank/` — a shared document store that spans every sprint.
+👉 No complex setup. No long learning curve.
 
 ---
 
-## Quick Start
+## What this is
 
-```bash
-# 1. Install Claude Code
-npm install -g @anthropic-ai/claude-code
+This repository gives you access to the same AI agents we use in real projects to:
 
-# 2. Clone this repository
-git clone https://github.com/natrisc/claude-code-agents
-cd claude-code-agents
+- Automate business processes  
+- Build internal tools  
+- Develop web applications faster  
+- Connect systems and workflows  
 
-# 3. Install Python dependencies
-pip install pyyaml
-
-# 4. Make hooks and scripts executable
-chmod +x .claude/hooks/*.sh
-chmod +x workflow/scripts/*.py
-
-# 5. Start Claude
-claude
-```
-
-Then ask Claude:
-
-> "Activate the project"
-
-The Scrum Master will route a task to the Product Owner, who will define the project context. From there, the team takes over — breakdown, analysis, architecture, implementation, QA, security, and delivery.
-
-Full setup instructions: [docs/setup.md](docs/setup.md)
+👉 You are not getting empty tooling —  
+you are using systems shaped by real-world experience.
 
 ---
 
-## Core Concepts
+## Who this is for
 
-- **Repository-centric memory** — agents read and write files, not conversation history. Context survives session boundaries.
-- **9 specialist agents** — each owns specific artifacts and reads only what it needs. Role boundaries are enforced, not suggested.
-- **Gate progression** — no phase begins until the previous gate passes `validate_gate.py`. Agents cannot skip steps.
-- **Multi-sprint continuity** — product context, architecture, and analysis persist across sprints and evolve through formal change control.
-- **Escalation over guessing** — when any agent encounters ambiguity, it raises an escalation. No agent invents requirements.
+This is for companies that:
 
----
-
-## Documentation
-
-| Topic | Link |
-| --- | --- |
-| Setup guide | [docs/setup.md](docs/setup.md) |
-| Core concepts | [docs/concepts.md](docs/concepts.md) |
-| Memory bank | [docs/memory-bank.md](docs/memory-bank.md) |
-| Roles | [docs/roles.md](docs/roles.md) |
-| Workflow & gate system | [docs/workflow.md](docs/workflow.md) |
-| Enforcement layer | [docs/enforcement.md](docs/enforcement.md) |
-| Architecture | [docs/architecture.md](docs/architecture.md) |
-| Git workflow | [docs/git-workflow.md](docs/git-workflow.md) |
-| MCP integrations | [docs/integrations.md](docs/integrations.md) |
-| Roadmap | [docs/roadmap.md](docs/roadmap.md) |
+- Still rely on manual work  
+- Use Excel, disconnected tools, or duplicate processes  
+- Are growing but operations are not scaling  
+- Want to build faster without large IT projects  
 
 ---
 
-## Contributing
+## What you can do with this
 
-Contributions welcome.
+⚙️ Automate repetitive workflows  
+📊 Build internal dashboards and tools  
+🔗 Connect systems and data  
+🚀 Prototype and validate ideas quickly  
 
-- follow the operating model in `CLAUDE.md`
-- keep changes small and focused
-- update relevant memory-bank artifacts if behaviour changes
-- security guidelines apply to all contributions
-
----
-
-## Need Help?
-
-I help engineering teams implement structured AI delivery workflows using Claude Code.
-
-- Claude Code workflow setup for your codebase
-- AI development workflow design and implementation
-- Agentic SDLC consulting
-
-Contact: [coen@appvia.nl](mailto:coen@appvia.nl)
+👉 You don’t start from zero — you build on what already works  
 
 ---
 
-⭐ If this project helps you, please star the repository.
+## Example
+
+**Before:**
+- Planning in Excel  
+- Manual updates  
+- Errors and delays  
+
+**After:**
+- Automated planning system  
+- Real-time updates  
+- No manual work  
+
+👉 Built in days using these agents
 
 ---
 
-## License
+## How it works
 
-MIT
+Start → Build → Scale
+
+1. Use the agents to automate a simple task  
+2. Expand into internal tools or workflows  
+3. Scale into production systems  
+
+👉 Start simple. Grow from there.
+
+---
+
+## Why this is different
+
+Normally:
+
+- Every software project starts from scratch  
+- It takes months to get something working  
+- Custom software is expensive and risky  
+
+With this approach:
+
+- You start with proven building blocks  
+- You reach working solutions much faster  
+- Custom software becomes viable  
+
+👉 What used to be too expensive to build is now possible  
+
+---
+
+## Quick start
+
+1. Clone this repository  
+2. Follow the setup instructions  
+3. Start with a simple use case (e.g. automate a workflow)  
+
+You can have a working system up and running quickly.
+
+---
+
+## Built on real-world experience
+
+These agents are based on years of experience in:
+
+- Process automation  
+- Web application development  
+- System integrations  
+
+👉 You are not experimenting — you are building on proven patterns
+
+---
+
+## Use cases
+
+- Automating internal operations  
+- Replacing Excel workflows  
+- Building internal dashboards  
+- Connecting disconnected tools  
+
+---
+
+## When you want to go further
+
+At some point, most teams want to:
+
+- Move faster  
+- Build more complex systems  
+- Ensure production-grade quality  
+
+That’s where we come in.
+
+---
+
+## What we do
+
+We build custom software that automates processes —  
+faster and more cost-effective than traditional approaches.
+
+- From idea → working software in weeks  
+- No long, heavy IT projects  
+- No vendor lock-in  
+
+---
+
+## From self-serve to full system
+
+Typical journey:
+
+1. Start with this repository  
+2. Build your first solutions  
+3. Let us help you create a production version  
+4. Scale into a full system  
+5. Take ownership (no dependency)  
+
+---
+
+## 🚀 Start now
+
+👉 Clone the repo and build your first workflow  
+👉 Or visit: https://appvia.nl  
+
+---
+
+## Important
+
+This is not just a tool.  
+It’s a way to build software faster and automate work.
+
+👉 You can start yourself  
+👉 Or let us accelerate it for you  
+
+---
+
+## One-line summary
+
+Start automating with proven systems —  
+and scale to production when you’re ready.

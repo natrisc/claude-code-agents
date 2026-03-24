@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Appvia logo" width="120"/>
+  <img src="assets/logo_appvia.png" alt="Appvia logo" width="120"/>
 
   <h1>Start without starting from scratch</h1>
   <p>Build software and automate processes in days — not months</p>
